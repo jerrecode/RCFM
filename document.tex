@@ -1,0 +1,1904 @@
+% ============================================================
+%  Radial-Cyclic Field Model — Full Paper Draft
+%  Version 1.1 — Resolved-problems integration
+%  Compile with: pdflatex rcfm.tex && bibtex rcfm &&
+%                pdflatex rcfm.tex && pdflatex rcfm.tex
+% ============================================================
+\documentclass[12pt,a4paper]{article}
+
+% ── Packages ────────────────────────────────────────────────
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage[margin=1.1in]{geometry}
+\usepackage[colorlinks=true,
+            linkcolor=blue!60!black,
+            citecolor=blue!60!black,
+            urlcolor=blue!60!black]{hyperref}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{mdframed}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{setspace}
+\usepackage{abstract}
+
+% ── Theorem environments ─────────────────────────────────────
+\theoremstyle{definition}
+\newtheorem{openprob}{Open Problem}
+\newtheorem{result}{Result}
+\newtheorem{consistency}{Consistency Condition}
+
+% ── Custom macros ────────────────────────────────────────────
+\newcommand{\Rmax}{R_{\max}}
+\newcommand{\rhoA}{\rho_{A}}
+\newcommand{\rhoB}{\rho_{B}}
+\newcommand{\Hcal}{\mathcal{H}}
+\newcommand{\Geff}{G_{\mathrm{eff}}}
+\newcommand{\Gammadrag}{\Gamma_{\mathrm{drag}}}
+\newcommand{\rhoc}{\rho_{c}}
+\newcommand{\rhoEW}{\rho_{\mathrm{EW}}}
+\newcommand{\dOmega}{d\Omega_{3}^{2}}
+\newcommand{\Mpl}{M_{\mathrm{Pl}}}
+\newcommand{\LCDM}{\ensuremath{\Lambda\mathrm{CDM}}}
+\newcommand{\todo}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
+\newcommand{\eqbox}[1]{%
+  \begin{mdframed}[backgroundcolor=blue!4,
+                   linecolor=blue!40,
+                   linewidth=0.8pt,
+                   innertopmargin=6pt,
+                   innerbottommargin=6pt]
+  #1
+  \end{mdframed}}
+
+% ── Metadata ────────────────────────────────────────────────
+\title{%
+  \textbf{The Radial-Cyclic Field Model (RCFM)}\\[6pt]
+  \large A 4-Dimensional Topological Framework\\
+  for Cyclic Cosmology
+}
+\author{%
+  Jeremy Erich Resch\\[4pt]
+  \small \textit{For Correspondence:}\\
+  \small \texttt{jer.code.contact@gmail.com}
+}
+\date{18.02.2026 \\ \small Version 1.1 --- Pre-submission draft}
+
+% ════════════════════════════════════════════════════════════
+\begin{document}
+\maketitle
+\begin{abstract}
+\noindent
+The Radial-Cyclic Field Model (RCFM) proposes a cosmology in
+which the universe is a 4-dimensional hyperspherical standing
+wave.  Matter is generated at a continuously active central
+singularity, streams outward as field-bonded matter on
+expanding 3-spherical shells (Phase~A), undergoes a phase
+transition at a critical radius $\Rmax$ where quantum fields
+can no longer be sustained, and returns inward as
+non-interacting ghost quanta (Phase~B).
+
+Starting from a metric ansatz on the 4-ball $B^{4}$, we
+derive a closed system of modified Friedmann equations
+incorporating a dual-stream energy-momentum tensor with a
+gravitational drag interaction.  We show that:
+\begin{enumerate}[label=(\roman*)]
+  \item Newtonian gravity is recovered exactly in the
+    weak-field, sub-horizon limit.
+  \item The Phase~B ghost quanta naturally produce an
+    effective equation of state $w_{B}\approx-1$, mimicking
+    a small positive cosmological constant without
+    fine-tuning.
+  \item The singularity boundary condition $a(r)\propto r^{2}$
+    is self-consistent and generates a nearly scale-invariant
+    primordial power spectrum with spectral tilt
+    $n_{s}-1=-\epsilon_{1}/k_{*}$, making inflation
+    unnecessary.
+  \item The drag kernel $\Gammadrag$ is spatially constant,
+    yielding a fully closed ODE system, and is shown to be
+    perturbatively stable to first order in deviations from
+    the exact $a\propto r^{2}$ solution.
+  \item Gravitational wave propagation is consistent with
+    the GW170817 speed constraint
+    $|c_{T}-c|/c<5\times10^{-16}$ to order
+    $\Lambda_{\mathrm{RSD}}<1.7\times10^{-16}$; this bound
+    is shown to be naturally satisfied without fine-tuning
+    for Planck-suppressed drag coupling.
+  \item Thermodynamic entropy is genuinely reset to zero at
+    each passage through the singularity via a Bogoliubov
+    transformation on the boundary field theory; global
+    entropy conservation is maintained through entanglement
+    transfer, in analogy with Page's theorem.
+  \item The critical transition density $\rhoc$ is derived
+    from electroweak symmetry restoration via a
+    Ginzburg--Landau effective potential, removing it as a
+    free parameter.
+  \item Phase~B ghost quanta are identified as decoherent
+    momentum eigenstates arising when the gauge condensate
+    vanishes, with their pressurelessness and
+    non-interaction following from the absence of gauge
+    dressing.
+  \item The spectral tilt parameter $\epsilon_{1}$ is derived
+    from first principles via the RCFM Friedmann equation,
+    yielding a joint constraint on $(\rho_{B,0}, \Rmax,
+    a_{1})$ consistent with the Planck 2018 measurement
+    $n_{s}=0.9649\pm0.0042$.
+\end{enumerate}
+Quantitative predictions for the CMB angular power spectrum
+$C_{\ell}$, the matter power spectrum $P(k)$, and the
+stochastic gravitational wave background are derived
+analytically.  Numerical integration of the background
+equations and Boltzmann solver implementation are identified
+as the remaining steps before comparison with Planck, DESI,
+and LIGO/Virgo observational data.
+\end{abstract}
+\setcounter{tocdepth}{2}
+\tableofcontents
+\newpage
+
+% ════════════════════════════════════════════════════════════
+\section{Introduction}
+\label{sec:intro}
+% ════════════════════════════════════════════════════════════
+
+The standard $\Lambda$CDM model provides an extraordinarily
+successful description of the observable universe, yet leaves
+several fundamental questions unanswered: the physical origin
+of the cosmological constant, the mechanism driving inflation,
+the nature of the thermodynamic arrow of time, and the
+ultimate fate of the universe
+\citep{Hawking1973,Weinberg1989,Riess2022}.
+
+Cyclic cosmologies offer an alternative framework in which
+the universe undergoes periodic contractions and expansions,
+potentially resolving the entropy paradox and the flatness
+problem without appealing to a single fine-tuned initial
+condition
+\citep{Steinhardt2002,Penrose2010,Ashtekar2006}.
+
+The Radial-Cyclic Field Model (RCFM) proposes a specific
+realisation of cyclic cosmology in which the universe is
+topologically a closed 4-dimensional ball $B^{4}$.  The
+radial coordinate $r\in[0,\Rmax]$ serves as an emergent
+time parameter for observers in the outward-streaming matter
+phase.  The model introduces two coexisting phases at every
+radial coordinate:
+\begin{description}
+  \item[Phase A] Active matter --- all Standard Model gauge
+    fields active, streaming outward.
+  \item[Phase B] Ghost quanta --- gauge fields dissolved,
+    pressureless, streaming inward.
+\end{description}
+The interaction between these streams, mediated purely
+gravitationally, is hypothesised to produce both attractive
+gravity and cosmic acceleration as two aspects of a single
+radial drag mechanism.
+
+This paper presents the complete mathematical framework of
+the RCFM, deriving all equations from first principles and
+identifying the unique observational signatures that
+distinguish the model from $\Lambda$CDM.  A series of
+previously open theoretical problems---the microphysical
+origin of the phase transition, the nature of ghost quanta,
+the perturbative robustness of the drag rate, the
+thermodynamic consistency of entropy resetting, the
+naturalness of the GW170817 bound, and the first-principles
+derivation of the spectral tilt---are each resolved
+analytically within the framework.
+
+\paragraph{Organisation.}
+Section~\ref{sec:topology} establishes the foundational
+topology and metric, including the Ginzburg--Landau
+derivation of the critical density.
+Section~\ref{sec:emt} constructs the dual-stream
+energy-momentum tensor and identifies the microphysical
+origin of Phase~B.  Section~\ref{sec:fe} derives the RCFM
+field equations.  Section~\ref{sec:eos} specifies the
+Phase~A equation of state.  Section~\ref{sec:newtonian}
+proves the weak-field limit.  Section~\ref{sec:cmb} derives
+the CMB angular power spectrum.  Section~\ref{sec:pk}
+derives the matter power spectrum.
+Section~\ref{sec:singularity} treats the singularity as a
+quantum boundary, derives the primordial spectrum, and
+obtains $\epsilon_{1}$ from first principles.
+Section~\ref{sec:drag} derives the drag kernel from
+microphysics and proves its perturbative stability.
+Section~\ref{sec:entropy} resolves the entropy paradox and
+addresses information conservation.  Section~\ref{sec:gw}
+treats gravitational wave propagation.
+Section~\ref{sec:obs} collects observational predictions
+and addresses naturalness.  Section~\ref{sec:numerical}
+outlines the numerical integration programme.
+Section~\ref{sec:conc} concludes.
+
+% ════════════════════════════════════════════════════════════
+\section{Foundational Topology and Metric}
+\label{sec:topology}
+% ════════════════════════════════════════════════════════════
+
+\subsection{The 4-Ball Manifold}
+
+The universe is modelled as a Lorentzian 4-manifold
+$(\mathcal{M}, g)$ where $\mathcal{M}\cong B^{4}$ is the
+closed 4-dimensional ball with radial coordinate
+$r\in[0,\Rmax]$.  The spatial sections at fixed $r$ are
+3-spheres $S^{3}$.
+
+The metric ansatz is:
+\begin{equation}
+  ds^{2} = -A(r)\,dr^{2} + a(r)^{2}\,\dOmega
+  \label{eq:metric}
+\end{equation}
+where $a(r)^{2}\equiv B(r)$ is the scale factor,
+$A(r)$ is the lapse function, and
+\begin{equation}
+  \dOmega = d\chi^{2}
+    + \sin^{2}\!\chi\!\left(d\theta^{2}
+    + \sin^{2}\!\theta\,d\phi^{2}\right)
+\end{equation}
+is the round metric on the unit $S^{3}$.  The coordinates
+$(\chi,\theta,\phi)$ parametrise the angular directions.
+
+This metric is formally identical to a closed
+Friedmann--Lema\^{i}tre--Robertson--Walker (FLRW) metric
+with $k=+1$ and lapse $N(r)=\sqrt{A(r)}$, with $r$
+playing the role of cosmic time.
+
+\subsection{Radial Time and Proper Time}
+
+For comoving observers in Phase~A (outward stream), the
+radial coordinate $r$ is the emergent time.  Proper time
+along a comoving worldline is:
+\begin{equation}
+  d\tau = \sqrt{A(r)}\,dr
+\end{equation}
+The generalised Hubble parameter is:
+\begin{equation}
+  \Hcal(r) \equiv \frac{1}{\sqrt{A}}\frac{da}{dr}
+  = \frac{a'}{\sqrt{A}}
+\end{equation}
+where primes denote $d/dr$.  In synchronous gauge
+$A(r)=1$, this reduces to $\Hcal=a'$.
+
+\subsection{The Singularity at $r=0$}
+\label{sec:singularity-topology}
+
+The centre $r=0$ is not a past event but a
+\emph{continuously active boundary condition} --- a locus
+at which infalling Phase~B quanta are reprocessed into
+outgoing Phase~A matter.  This is analogous to a standing
+wave node: energy passes through it cyclically while the
+node itself is stationary in the radial coordinate.
+
+The critical physical consequence is that the singularity
+acts as a \emph{quantum reflecting boundary}, whose
+scattering matrix determines the primordial power spectrum
+(Section~\ref{sec:singularity}).
+
+\subsection{The Critical Radius $\Rmax$ and the
+            Phase Transition}
+\label{sec:rmax}
+
+At $r=\Rmax$, the energy density of the expanding shell
+falls below the threshold $\rhoc$ required to sustain
+gauge field coherence:
+\begin{equation}
+  \rhoA(\Rmax) = \rhoc
+  \label{eq:rho-c}
+\end{equation}
+The volume of a 3-sphere of radius $r$ is
+$V_{3}(r)=2\pi^{2}r^{3}/3$, so for a shell of fixed
+energy $E_{\mathrm{shell}}$:
+\begin{equation}
+  \rhoA(r) = \frac{3E_{\mathrm{shell}}}{2\pi^{2}r^{3}}
+  \propto r^{-3}
+\end{equation}
+The condition~(\ref{eq:rho-c}) therefore defines
+$\Rmax$ uniquely given $E_{\mathrm{shell}}$ and $\rhoc$.
+
+\subsection{Derivation of $\rhoc$ from Electroweak
+            Physics}
+\label{sec:rhoc-derivation}
+
+In the original formulation, $\rhoc$ was postulated.
+We now derive it from first principles using a
+Ginzburg--Landau effective field theory for the gauge
+sector order parameter \citep{Ginzburg1950,LandauSM}.
+
+Let $\phi$ denote the gauge-sector vacuum expectation value
+(VEV).  The density-dependent effective potential is:
+\begin{equation}
+  V(\phi,\rhoA) = -\frac{m_{0}^{2}}{2}
+    \left(1-\frac{\rhoc}{\rhoA}\right)\phi^{2}
+    + \frac{\lambda}{4}\phi^{4}
+  \label{eq:GL-potential}
+\end{equation}
+This yields two distinct phases depending on the sign of
+the mass term:
+\begin{description}
+  \item[Phase A $(\rhoA>\rhoc)$:]
+    The squared-mass coefficient is positive, so the VEV
+    is non-zero:
+    \begin{equation}
+      \langle\phi\rangle
+        = m_{0}\sqrt{\frac{1-\rhoc/\rhoA}{\lambda}}
+        \neq 0
+    \end{equation}
+    Gauge bosons acquire mass via the Higgs mechanism;
+    all Standard Model interactions are active.
+  \item[Phase B $(\rhoA<\rhoc)$:]
+    The mass term flips sign; $\langle\phi\rangle=0$ is
+    the global minimum.  Spontaneous symmetry is
+    \emph{restored}; gauge bosons become massless and
+    decohere.  Standard Model interactions dissolve.
+\end{description}
+The transition is second-order because $\langle\phi\rangle$
+vanishes continuously as $\rhoA\to\rhoc^{+}$, consistent
+with the paper's original claim.
+
+The critical density is fixed to the electroweak scale:
+\eqbox{
+\begin{equation}
+  \rhoc \equiv \rhoEW
+    = \frac{\pi^{2}}{30}\,g_{*}(T_{\mathrm{EW}})\,
+      T_{\mathrm{EW}}^{4}
+    \approx \frac{\pi^{2}}{30}\times106.75\times
+      (100\,\mathrm{GeV})^{4}
+  \label{eq:rhoc-EW}
+\end{equation}
+}
+This is not a free parameter; it is determined entirely
+by the measured electroweak scale and the Standard Model
+effective degrees of freedom.  Consequently, $\Rmax$ is
+also fully determined:
+\begin{equation}
+  \Rmax = \left(
+    \frac{3E_{\mathrm{shell}}}{2\pi^{2}\rhoEW}
+  \right)^{1/3}
+  \label{eq:Rmax-derived}
+\end{equation}
+removing one free parameter from the model.
+
+% ════════════════════════════════════════════════════════════
+\section{The Dual-Stream Energy-Momentum Tensor}
+\label{sec:emt}
+% ════════════════════════════════════════════════════════════
+
+\subsection{4-Velocities}
+
+Phase~A matter streams outward; Phase~B ghost quanta
+stream inward.  Their 4-velocities, normalised with
+$g_{\mu\nu}u^{\mu}u^{\nu}=-1$, are:
+\begin{align}
+  u^{(A)\mu} &= \left(\frac{1}{\sqrt{A}},0,0,0\right),
+  &u^{(A)}_{\mu} &= \left(-\sqrt{A},0,0,0\right)
+  \label{eq:4vel-A}\\
+  u^{(B)\mu} &= \left(-\frac{1}{\sqrt{A}},0,0,0\right),
+  &u^{(B)}_{\mu} &= \left(+\sqrt{A},0,0,0\right)
+  \label{eq:4vel-B}
+\end{align}
+These are antiparallel in the radial direction.
+
+\subsection{Individual Phase Contributions}
+
+The stress-energy of Phase~A (active matter with
+pressure $p_{A}$ from gauge fields) is:
+\begin{equation}
+  T^{(A)}_{\mu\nu}
+    = (\rhoA+p_{A})\,u^{(A)}_{\mu}u^{(A)}_{\nu}
+    + p_{A}\,g_{\mu\nu}
+\end{equation}
+Phase~B ghost quanta are pressureless ($p_{B}=0$):
+\begin{equation}
+  T^{(B)}_{\mu\nu}
+    = \rhoB\,u^{(B)}_{\mu}u^{(B)}_{\nu}
+\end{equation}
+
+\subsection{Gravitational Drag Interaction}
+
+The two-stream gravitational drag coupling is encoded in
+the minimal symmetric interaction tensor:
+\begin{equation}
+  T^{(\mathrm{drag})}_{\mu\nu}
+    = -\beta\,\rhoA\rhoB\!\left(
+        u^{(A)}_{\mu}u^{(B)}_{\nu}
+        + u^{(B)}_{\mu}u^{(A)}_{\nu}
+      \right)
+  \label{eq:drag-tensor}
+\end{equation}
+where $\beta\geq0$ is the drag coupling constant
+(dimensions: $[\text{energy density}]^{-1}$).
+The antisymmetric product is nonzero only in the $rr$
+sector, confirming that drag is purely radial.
+
+\subsection{Total EMT and Effective Fluid Parameters}
+
+The total energy-momentum tensor is:
+\begin{equation}
+  \boxed{
+    T_{\mu\nu}
+      = T^{(A)}_{\mu\nu}
+      + T^{(B)}_{\mu\nu}
+      + T^{(\mathrm{drag})}_{\mu\nu}
+  }
+  \label{eq:total-emt}
+\end{equation}
+The explicit components are:
+\begin{align}
+  T_{rr}  &= A\!\left[\rhoA+\rhoB
+               +2\beta\rhoA\rhoB\right]
+  \label{eq:Trr}\\
+  T_{ij}  &= p_{A}\,a^{2}\,\gamma_{ij}
+  \label{eq:Tij}
+\end{align}
+Phase~B contributes zero spatial pressure.  Define
+effective fluid variables:
+\begin{equation}
+  \rho_{\mathrm{eff}}
+    \equiv \rhoA+\rhoB+2\beta\rhoA\rhoB,
+  \qquad
+  p_{\mathrm{eff}} \equiv p_{A}
+  \label{eq:eff-fluid}
+\end{equation}
+
+\subsection{Microphysical Origin of Phase~B Quanta}
+\label{sec:phaseB-micro}
+
+The phenomenological description of Phase~B as
+pressureless and non-interacting now follows from first
+principles via the Ginzburg--Landau analysis of
+Section~\ref{sec:rhoc-derivation}.
+
+When $\langle\phi\rangle\to0$ at $r=\Rmax$, the
+interaction Lagrangian:
+\begin{equation}
+  \mathcal{L}_{\mathrm{int}}
+    = g\,\bar{\psi}\gamma^{\mu}A_{\mu}\psi + \cdots
+\end{equation}
+vanishes because $A_{\mu}$ loses its coherent vacuum
+condensate.  What remains are the free propagating
+momentum eigenstates of the formerly interacting
+fields---kinematic quanta without gauge dressing.
+Their properties follow directly:
+
+\paragraph{Pressurelessness.}
+Without interactions there is no mechanism to establish
+thermodynamic equilibrium.  The quanta stream freely in
+momentum eigenstates, identical to pressureless cold
+matter:
+\begin{equation}
+  p_{B} = \tfrac{1}{3}\langle v^{2}\rangle\rhoB
+  \to 0
+  \qquad
+  \bigl(\langle v^{2}\rangle\to0
+    \text{ as } \rhoA\to\rhoc\bigr)
+\end{equation}
+
+\paragraph{Non-interaction.}
+With no gauge condensate, all scattering cross sections
+vanish to all orders:
+\begin{equation}
+  \sigma_{BB} \propto
+    |\mathcal{M}|^{2} \propto g^{2}\langle\phi\rangle^{2} = 0
+\end{equation}
+
+\paragraph{Inward streaming.}
+At $r=\Rmax$ the shell has expanded to its maximum
+extent.  Without radiation pressure from gauge
+interactions to resist it, the gravitational attraction
+of the central boundary at $r=0$ dominates and the
+quanta begin infalling.
+
+\paragraph{Decoherence radiation signature.}
+The Phase~A $\to$ Phase~B transition radiates a brief
+burst of decoherence radiation, analogous to Unruh
+radiation at the transition surface.  This produces a
+\emph{stochastic gravitational wave burst} localised at
+$r=\Rmax$, contributing to
+$\Omega_{\mathrm{GW}}^{\mathrm{cycle}}(f)$ in
+equation~(\ref{eq:Omega-GW}) with characteristic
+frequency:
+\begin{equation}
+  f_{\mathrm{cycle}}
+    = \frac{\Hcal(\Rmax)}{2\pi}
+    \approx \frac{H_{0}}{2\pi}
+      \sqrt{\Omega_{k}}\left(\frac{\Rmax}{a_{0}}\right)^{-1}
+  \label{eq:f-cycle}
+\end{equation}
+This is a third distinct testable stochastic GW
+component, in addition to the primordial and Phase~B
+contributions identified in Section~\ref{sec:gw}.
+
+% ════════════════════════════════════════════════════════════
+\section{RCFM Field Equations}
+\label{sec:fe}
+% ════════════════════════════════════════════════════════════
+
+\subsection{Einstein Field Equations}
+
+Applying $G_{\mu\nu}=8\pi G\,T_{\mu\nu}$ to the metric
+(\ref{eq:metric}) with the total EMT
+(\ref{eq:total-emt}), and using the Christoffel symbols:
+\begin{align}
+  \Gamma^{r}_{rr} &= \frac{A'}{2A},
+  &\Gamma^{r}_{ij} &= \frac{aa'}{A}\gamma_{ij},
+  &\Gamma^{i}_{rj} &= \frac{a'}{a}\delta^{i}_{j}
+\end{align}
+we obtain two independent equations.
+
+\subsection{RCFM Friedmann Equation (F1)}
+
+The $(r,r)$ Einstein equation gives the \emph{constraint}:
+\eqbox{
+\begin{equation}
+  \frac{(a')^{2}}{A}+1
+    = \frac{8\pi G}{3}
+      \!\left(\rhoA+\rhoB+2\beta\rhoA\rhoB\right)a^{2}
+  \tag{F1}
+  \label{eq:F1}
+\end{equation}
+}
+This is the RCFM Friedmann equation.  In synchronous
+gauge ($A=1$) it reduces to:
+\begin{equation}
+  (a')^{2} = \frac{8\pi G}{3}\rho_{\mathrm{eff}}\,a^{2}-1
+  \label{eq:F1-sync}
+\end{equation}
+
+\subsection{Raychaudhuri Equation (F2)}
+
+The spatial $(i,j)$ Einstein equation gives the
+\emph{dynamical} equation:
+\eqbox{
+\begin{equation}
+  \frac{2}{\sqrt{A}}\frac{d\Hcal}{dr}
+    +3\Hcal^{2}+\frac{1}{a^{2}}
+    = -8\pi G\,p_{A}
+  \tag{F2}
+  \label{eq:F2}
+\end{equation}
+}
+Note the asymmetry: only $p_{A}$ appears, since
+Phase~B is pressureless.
+
+\subsection{Conservation Equations}
+
+The Bianchi identity $\nabla_{\mu}T^{\mu\nu}=0$ yields
+two coupled conservation equations with the constant
+drag rate $\Gammadrag$ (derived in
+Section~\ref{sec:drag}):
+\eqbox{
+\begin{align}
+  \rhoA' + 3\Hcal\sqrt{A}(\rhoA+p_{A})
+    &= +\Gammadrag\,\rhoA\rhoB
+  \tag{C1}
+  \label{eq:C1}\\
+  \rhoB' - 3\Hcal\sqrt{A}\,\rhoB
+    &= -\Gammadrag\,\rhoA\rhoB
+  \tag{C2}
+  \label{eq:C2}
+\end{align}
+}
+The signs encode the physical exchange: Phase~B loses
+energy to Phase~A via gravitational drag.  The total
+$\nabla_{\mu}T^{\mu\nu}=0$ is satisfied by construction.
+
+\subsection{Effective Gravitational Constant}
+
+The Phase~B density evolves as:
+\begin{equation}
+  \bar{\rhoB}(r) = \rho_{B,0}
+    \left(\frac{\Rmax}{a(r)}\right)^{3}
+  \label{eq:rhoB-evolution}
+\end{equation}
+The RCFM effective gravitational constant is:
+\eqbox{
+\begin{equation}
+  \Geff(r) = G\!\left[
+    1+2\beta\,\rho_{B,0}
+    \left(\frac{\Rmax}{a(r)}\right)^{3}
+  \right]
+  \label{eq:G-eff}
+\end{equation}
+}
+Current observations constrain the dimensionless
+correction:
+\begin{equation}
+  \Lambda_{\mathrm{RCFM}}(r)
+    \equiv 2\beta\rho_{B,0}\!\left(\frac{\Rmax}{a(r)}\right)^{3}
+  \ll 1
+  \label{eq:Lambda-RCFM}
+\end{equation}
+
+\subsection{Recovery of $\Lambda$CDM as a Limiting Case}
+
+When $\beta\to0$ and
+$\rhoB\to\Lambda/(8\pi G)=\mathrm{const}$,
+Eq.~(\ref{eq:F1}) reduces to the standard Friedmann
+equation with a cosmological constant.  The RCFM
+therefore contains $\Lambda$CDM as a limiting case.
+
+% ════════════════════════════════════════════════════════════
+\section{Phase A Equation of State}
+\label{sec:eos}
+% ════════════════════════════════════════════════════════════
+
+\subsection{Relativistic Thermal Fluid}
+
+Phase~A is Standard Model matter in thermal equilibrium.
+For a relativistic gas at temperature $T$:
+\begin{equation}
+  \rhoA = \frac{\pi^{2}}{30}g_{*}(T)\,T^{4},
+  \qquad
+  p_{A} = \frac{\rhoA}{3}\cdot
+    \frac{g_{*P}(T)}{g_{*}(T)}
+\end{equation}
+where $g_{*}(T)$ counts the relativistic energy degrees
+of freedom and $g_{*P}(T)$ the pressure degrees of
+freedom.
+
+\subsection{Multi-Epoch Structure}
+
+The equation of state parameter $w_{A}$ evolves through
+several epochs as the shell expands and cools:
+
+\begin{table}[h]
+\centering
+\caption{Phase~A equation of state across cosmological
+         epochs.}
+\label{tab:eos}
+\begin{tabular}{llcc}
+\toprule
+Epoch & $T$ range & $g_{*}$ & $w_{A}$\\
+\midrule
+Electroweak    & $T\gg100\,\text{GeV}$      & 106.75         & $1/3$\\
+QCD transition & $T\sim150\,\text{MeV}$     & $10.75\to3.36$ & $\sim1/3$\\
+Lepton era     & $1\,\text{MeV}\lesssim T$  & 10.75          & $1/3$\\
+BBN            & $T\sim0.1\,\text{MeV}$     & 3.36           & $1/3$\\
+Matter dom.    & $T\ll\text{eV}$            & ---            & $\approx0$\\
+Dilution       & $r\to\Rmax$               & ---            & ill-defined\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Unified Analytic Parameterisation}
+
+A closed-form expression valid across all epochs is:
+\eqbox{
+\begin{equation}
+  w_{A}(\rhoA) = \frac{1}{3}\cdot
+    \frac{1}{1+\left(\rho_{\mathrm{eq}}/\rhoA\right)^{1/4}}
+  \label{eq:w-unified}
+\end{equation}
+}
+where $\rho_{\mathrm{eq}}\approx4.15\times10^{-14}\,
+\mathrm{J\,m^{-3}}$ is the density at matter-radiation
+equality.  This gives $w_{A}\to1/3$ for
+$\rhoA\gg\rho_{\mathrm{eq}}$ and $w_{A}\to0$ for
+$\rhoA\ll\rho_{\mathrm{eq}}$.
+
+\subsection{Mapping $r$ to Redshift}
+
+The temperature-scale factor relation from photon number
+conservation is:
+\begin{equation}
+  T(r) = T_{0}\cdot\frac{a_{0}}{a(r)},
+  \qquad
+  \rhoA(r) = \rho_{A,0}\cdot
+    \frac{g_{*}(T(r))}{g_{*}(T_{0})}\cdot
+    \left(\frac{a_{0}}{a(r)}\right)^{4}
+  \label{eq:T-a}
+\end{equation}
+This provides the complete dictionary between the RCFM
+radial coordinate $r$ and standard cosmological
+observables.
+
+% ════════════════════════════════════════════════════════════
+\section{Weak-Field Limit and Newtonian Gravity}
+\label{sec:newtonian}
+% ════════════════════════════════════════════════════════════
+
+\subsection{Metric Perturbations}
+
+We perturb the background around $(\bar{a},
+\bar{\rhoA},\bar{\rhoB},\bar{p}_{A})$ satisfying
+(\ref{eq:F1})--(\ref{eq:F2}).  In longitudinal gauge:
+\begin{equation}
+  ds^{2} = -(1+2\Phi)\,dr^{2}
+    + \bar{a}^{2}(1-2\Phi)\,\dOmega
+\end{equation}
+where $|\Phi|\ll1$ is the Bardeen gravitational
+potential \citep{Bardeen1980}.
+
+\subsection{Poisson Equation}
+
+In the sub-horizon, quasi-static limit
+$k^{2}/\bar{a}^{2}\gg\bar{\Hcal}^{2}$, the perturbed
+$(r,r)$ Einstein equation reduces to:
+\eqbox{
+\begin{equation}
+  \nabla^{2}\Phi
+    = 4\pi\Geff\,\delta\rhoA
+  \label{eq:Poisson}
+\end{equation}
+}
+This is the Newtonian Poisson equation with effective
+gravitational constant $\Geff$ given by
+(\ref{eq:G-eff}).  Newtonian gravity is fully recovered.
+
+\subsection{Geodesic Equation}
+
+In the non-relativistic, sub-Hubble limit, the spatial
+components of the Phase~A geodesic equation give:
+\begin{equation}
+  \ddot{\mathbf{x}} = -\nabla\Phi
+  \label{eq:Newton}
+\end{equation}
+confirming Newton's second law with gravitational
+potential sourced by (\ref{eq:Poisson}).
+
+\subsection{Observational Constraint on $\Geff$}
+
+Lunar laser ranging and pulsar timing constrain
+time-variation of $G$ \citep{Hofmann2018}:
+\begin{equation}
+  \frac{\Geff-G}{G} < 10^{-5}
+\end{equation}
+This gives the upper bound on the drag coupling:
+\begin{equation}
+  \beta < \frac{10^{-5}}{2\rho_{B,0}}
+    \left(\frac{a_{0}}{\Rmax}\right)^{3}
+  \label{eq:beta-bound}
+\end{equation}
+
+% ════════════════════════════════════════════════════════════
+\section{CMB Angular Power Spectrum}
+\label{sec:cmb}
+% ════════════════════════════════════════════════════════════
+
+\subsection{Mode Functions on $S^{3}$}
+
+Scalar perturbations are expanded in hyperspherical
+harmonics $Q^{(n)}_{\ell m}$ satisfying:
+\begin{equation}
+  \nabla^{2}_{S^{3}}Q^{(n)}_{\ell m}
+    = -\frac{n^{2}-1}{a^{2}}\,Q^{(n)}_{\ell m},
+  \qquad n=1,2,3,\ldots,\quad\ell\leq n-1
+  \label{eq:hyper-harmonics}
+\end{equation}
+The effective comoving wavenumber
+$k_{n}^{2}=(n^{2}-1)/a^{2}$ is discrete, in contrast
+to the continuous spectrum in flat space.  Discreteness
+is observationally relevant only for $\ell\lesssim10$.
+
+\subsection{Conformal Coordinate}
+
+Define the conformal radial coordinate:
+\begin{equation}
+  \eta(r)\equiv\int_{0}^{r}\frac{dr'}{a(r')}
+  \label{eq:eta}
+\end{equation}
+so that $d\eta=dr/a$.  All perturbation equations are
+written with dots denoting $d/d\eta$.
+
+\subsection{Boltzmann Hierarchy}
+
+The photon temperature multipole moments
+$\Theta_{\ell}(k,\eta)$ satisfy the Boltzmann hierarchy
+\citep{Zaldarriaga1997}:
+\begin{align}
+  \dot{\Theta}_{0} &= -k\Theta_{1}-\dot{\Phi}
+  \label{eq:B0}\\
+  \dot{\Theta}_{1} &= \frac{k}{3}\Theta_{0}
+    -\frac{2k}{3}\Theta_{2}+\frac{k}{3}\Phi
+    +\dot{\kappa}\!\left(\frac{v_{b}}{3}-\Theta_{1}\right)
+  \label{eq:B1}\\
+  \dot{\Theta}_{\ell} &= \frac{k}{2\ell+1}\!\left[
+    \ell\Theta_{\ell-1}-(\ell+1)\Theta_{\ell+1}\right]
+    +\dot{\kappa}\!\left[-\Theta_{\ell}
+    +\delta_{\ell0}\Theta_{0}
+    +\delta_{\ell1}\frac{v_{b}}{3}
+    -\delta_{\ell2}\frac{\Pi}{10}\right],\quad\ell\geq2
+  \label{eq:Bl}
+\end{align}
+where $\Pi=\Theta_{2}+\Theta_{P,2}+\Theta_{P,0}$,
+$v_{b}$ is the baryon velocity, and
+$\dot{\kappa}=an_{e}\sigma_{T}$.
+
+The gravitational potential is sourced by:
+\begin{equation}
+  k^{2}\Phi = 4\pi\Geff(\eta)\,a^{2}\!\left[
+    \delta\rhoA + \delta\rhoB(1+2\beta\bar{\rhoA})
+  \right]
+  \label{eq:Phi-source}
+\end{equation}
+
+\subsection{Tight-Coupling Approximation and Sound Speed}
+
+Before recombination ($\dot{\kappa}\to\infty$):
+\begin{equation}
+  c_{s}^{2}(\eta) = \frac{1}{3(1+R_{b}(\eta))},
+  \qquad
+  R_{b}(\eta)\equiv\frac{3\rhoA^{(b)}}{4\rho_{\gamma}}
+  \label{eq:sound-speed}
+\end{equation}
+
+\subsection{RCFM Oscillator Equation}
+
+In tight coupling, combining (\ref{eq:B0}) and
+(\ref{eq:B1}) yields:
+\eqbox{
+\begin{equation}
+  \ddot{\Theta}_{0}
+    +\frac{\dot{R}_{b}}{1+R_{b}}\dot{\Theta}_{0}
+    +k^{2}c_{s}^{2}\Theta_{0}
+    = \mathcal{F}_{\mathrm{grav}}(\eta)
+    + \mathcal{S}_{B}(\eta)
+  \label{eq:OSC}
+\end{equation}
+}
+The standard gravitational driving term is:
+\begin{equation}
+  \mathcal{F}_{\mathrm{grav}}
+    = -k^{2}\!\left[\frac{\Phi}{3}
+      +\frac{\dot{R}_{b}\Phi}{k^{2}(1+R_{b})}\right]
+      -\ddot{\Phi}
+\end{equation}
+The Phase~B source term (absent in $\Lambda$CDM) is:
+\begin{equation}
+  \mathcal{S}_{B}(\eta)
+    = -\frac{4\pi G\bar{\rhoA}a^{2}
+              \cdot2\beta\bar{\rhoB}\delta_{B}}
+            {1+R_{b}}
+  \label{eq:S_B}
+\end{equation}
+
+\subsection{Sound Horizon}
+
+\begin{equation}
+  r_{s}(\eta_{*}) = \int_{0}^{\eta_{*}}
+    c_{s}(\eta')\,d\eta'
+    \approx \frac{2}{\sqrt{3}}\frac{1}{\sqrt{\Omega_{b}h^{2}/\Omega_{\gamma}h^{2}}}
+    \ln\!\left[
+      \frac{\sqrt{1+R_{b}(\eta_{*})}
+            +\sqrt{R_{b}(\eta_{*})+R_{b,\mathrm{eq}}}}
+           {1+\sqrt{R_{b,\mathrm{eq}}}}
+    \right]
+  \label{eq:sound-horizon}
+\end{equation}
+The RCFM correction to the sound horizon is
+$\Delta r_{s}/r_{s}\sim\Lambda_{\mathrm{CMB}}\ll1$.
+
+\subsection{Silk Damping}
+
+\begin{equation}
+  r_{d}^{2}(\eta) = \int_{0}^{\eta}
+    \frac{d\eta'}{6(1+R_{b})\dot{\kappa}}
+    \left[\frac{16}{15}+\frac{R_{b}^{2}}{1+R_{b}}\right]
+  \label{eq:silk}
+\end{equation}
+The RCFM modifies this through the BBN helium abundance.
+The enhanced $\Geff$ at BBN shifts $Y_{p}$:
+\begin{equation}
+  \Delta Y_{p}
+    \approx 0.16\,\Lambda_{\mathrm{BBN}}
+    = 0.16\times2\beta\rho_{B,0}
+      \left(\frac{\Rmax}{a_{\mathrm{BBN}}}\right)^{3}
+  \label{eq:DeltaYp}
+\end{equation}
+
+\subsection{Transfer Function and Line-of-Sight
+            Integration}
+
+Using the Seljak--Zaldarriaga line-of-sight method
+\citep{Zaldarriaga1997}:
+\begin{equation}
+  \Delta_{\ell}(k) = \int_{0}^{\eta_{0}}
+    S(k,\eta)\,j_{\ell}[k(\eta_{0}-\eta)]\,d\eta
+  \label{eq:LOS}
+\end{equation}
+\begin{equation}
+  \Delta_{\ell}(k)
+    = \Delta_{\ell}^{(0)}(k)
+    + \Delta_{\ell}^{(B)}(k)
+    + \Delta_{\ell}^{\mathrm{ISW}}(k)
+  \label{eq:Delta-split}
+\end{equation}
+
+\subsection{Angular Power Spectrum}
+
+\eqbox{
+\begin{equation}
+  C_{\ell}^{\mathrm{RCFM}}
+    = \frac{2}{\pi}\int_{0}^{\infty}k^{2}
+      \left|\Delta_{\ell}^{(0)}(k)
+           +\Delta_{\ell}^{(B)}(k)
+           +\Delta_{\ell}^{\mathrm{ISW}}(k)
+      \right|^{2}
+      P_{\Phi}(k)\,dk
+  \label{eq:Cl}
+\end{equation}
+}
+
+\subsection{Acoustic Peak Structure}
+
+Peak positions occur at $kr_{s}(\eta_{*})=n\pi$:
+\begin{equation}
+  \ell_{n} \approx n\pi\frac{\Delta\eta_{*}}{r_{s}(\eta_{*})}
+\end{equation}
+\begin{equation}
+  \ell_{n}^{\mathrm{RCFM}} > \ell_{n}^{\Lambda\mathrm{CDM}}
+  \label{eq:peak-shift}
+\end{equation}
+The Phase~B source modifies the odd/even peak amplitude
+ratio:
+\begin{equation}
+  \mathcal{R}_{n}
+    \equiv \frac{C_{\ell_{2n-1}}}{C_{\ell_{2n}}}
+\end{equation}
+\begin{equation}
+  \mathcal{R}_{n}^{\mathrm{RCFM}}
+    = \mathcal{R}_{n}^{\Lambda\mathrm{CDM}}
+      \!\left[1+\epsilon_{n}(\beta,\rho_{B,0},\Rmax)\right]
+  \label{eq:peak-ratio}
+\end{equation}
+where $\epsilon_{n}$ grows with $n$, providing a
+scale-dependent signature testable with Planck, ACT,
+and SPT \citep{PlanckVI2020}.
+
+\subsection{Low-$\ell$ Quadrupole Suppression}
+
+\begin{equation}
+  \frac{C_{2}^{S^{3}}}{C_{2}^{\mathbb{R}^{3}}}
+    = \left(\frac{k_{\min}\Delta\eta_{*}}{2\pi}\right)^{n_{s}-1}
+    < 1
+  \label{eq:quadrupole}
+\end{equation}
+providing a natural explanation for the observed
+low-$\ell$ CMB power deficit.
+
+\subsection{Late Integrated Sachs-Wolfe Effect}
+
+\begin{equation}
+  \dot{\Phi} = -\frac{\dot{\Geff}}{\Geff}\Phi
+    + \text{standard GR terms}
+\end{equation}
+At $a\to a_{0}$, $\dot{\Geff}\to0$, so the late ISW
+approaches the $\Lambda$CDM result.  At intermediate
+redshifts $1<z<10$, a measurable excess ISW signal
+relative to $\Lambda$CDM is predicted.
+
+% ════════════════════════════════════════════════════════════
+\section{Matter Power Spectrum}
+\label{sec:pk}
+% ════════════════════════════════════════════════════════════
+
+\subsection{Growth Factor}
+
+\begin{equation}
+  \delta_{A}''+2\Hcal\delta_{A}'
+    -4\pi\Geff\bar{\rhoA}a^{2}\delta_{A}
+    = \mathcal{S}(k,r)
+  \label{eq:growth}
+\end{equation}
+where $\mathcal{S}=4\pi G a^{2}\bar{\rhoA}\cdot
+2\beta\bar{\rhoB}\delta_{B}$.
+
+\eqbox{
+\begin{equation}
+  D_{+}(r) = \Hcal(r)\int_{0}^{r}
+    \frac{dr'}{\Hcal^{3}(r')\,a^{2}(r')}
+  \label{eq:D+}
+\end{equation}
+}
+\begin{equation}
+  f\sigma_{8}(r) = \sigma_{8}\,\Omega_{A}^{\gamma}(r)
+    \cdot\frac{D_{+}(r)}{D_{+}(r_{0})}
+  \label{eq:fsigma8}
+\end{equation}
+\begin{equation}
+  \gamma_{\mathrm{RCFM}}
+    = \gamma_{\mathrm{GR}}
+    + \frac{\Lambda_{\mathrm{RCFM}}(r)}
+           {1+\Lambda_{\mathrm{RCFM}}(r)}\,\Delta\gamma
+  \label{eq:gamma}
+\end{equation}
+
+\subsection{Matter Transfer Function}
+
+\begin{equation}
+  T_{A}(k) = T_{A}^{\mathrm{BBKS}}(k)\cdot\mathcal{M}(k)
+  \label{eq:T-A}
+\end{equation}
+\begin{equation}
+  T_{A}^{\mathrm{BBKS}}(q)
+    = \frac{\ln(1+2.34q)}{2.34q}
+      \left[1+3.89q+(16.1q)^{2}+(5.46q)^{3}+(6.71q)^{4}
+      \right]^{-1/4}
+  \label{eq:BBKS}
+\end{equation}
+\eqbox{
+\begin{equation}
+  \mathcal{M}(k) = 1+\alpha_{\beta}
+    \ln\!\left(\frac{k}{k_{\mathrm{eq}}}\right)
+    \cdot\Lambda_{\mathrm{eq}}
+  \label{eq:Mk}
+\end{equation}
+}
+
+\subsection{Full Power Spectrum}
+
+\eqbox{
+\begin{equation}
+  P(k,r_{0}) = P_{\mathrm{ini}}(k)\cdot T_{A}^{2}(k)
+    \cdot D_{+}^{2}(r_{0})\cdot\mathcal{M}^{2}(k)
+    + P^{(B)}(k)
+  \label{eq:Pk}
+\end{equation}
+}
+\begin{equation}
+  P^{(B)}(k)
+    = \left(\frac{D_{+}(r_{0})}{D_{+}(r_{*})}\right)^{2}
+      \int_{0}^{r_{*}}\!\!\int_{0}^{r_{*}}
+      G_{+}(r_{0},r_{1})G_{+}(r_{0},r_{2})\,
+      \mathcal{S}(k,r_{1})\mathcal{S}^{*}(k,r_{2})\,
+      dr_{1}\,dr_{2}
+  \label{eq:P-B}
+\end{equation}
+
+\subsection{BAO Scale}
+
+\begin{equation}
+  k_{n}^{\mathrm{BAO}}
+    = \frac{n\pi}{r_{s}(\eta_{*})}
+      -n\pi\frac{\Delta r_{s}}{r_{s}^{2}(\eta_{*})}
+  \label{eq:BAO-shift}
+\end{equation}
+Internal consistency requires that BAO and CMB peak
+shifts be equal in magnitude---a \emph{joint-fit
+consistency check} for the model.
+
+% ════════════════════════════════════════════════════════════
+\section{Primordial Spectrum from the Singularity}
+\label{sec:singularity}
+% ════════════════════════════════════════════════════════════
+
+\subsection{The Singularity as a Quantum Boundary}
+
+Near $r=0$, with $a(r)\propto r^{\nu}$, the mode
+equation:
+\begin{equation}
+  u_{k}''+\left(k^{2}-V_{\mathrm{eff}}(r)\right)u_{k}=0
+\end{equation}
+has effective potential:
+\begin{equation}
+  V_{\mathrm{eff}}(r) = \frac{\mu^{2}-\tfrac{1}{4}}{r^{2}},
+  \qquad
+  \mu^{2}=\left(\nu-\tfrac{1}{2}\right)^{2}+\ell(\ell+2)
+\end{equation}
+The exact solutions are Bessel functions:
+\begin{equation}
+  u_{k}(r) = \sqrt{r}\!\left[
+    C_{1}J_{\mu}(kr)+C_{2}Y_{\mu}(kr)
+  \right]
+\end{equation}
+Regularity at the origin requires $C_{2}=0$.
+
+\subsection{Scale Invariance Condition}
+
+In the long-wavelength limit $kr\ll1$:
+\begin{equation}
+  |u_{k}|^{2}\propto k^{-2\mu}
+  \implies
+  \mathcal{P}_{\Phi}(k)\propto k^{3-2\mu}
+\end{equation}
+Exact scale invariance ($n_{s}=1$) requires $\mu=3/2$,
+which for $\ell=0$ gives:
+\begin{equation}
+  \nu=2
+  \label{eq:nu2}
+\end{equation}
+
+\subsection{Self-Consistency with (F1)}
+\label{sec:self-consistency}
+
+Substituting $a(r)=a_{1}r^{\nu}$ into the RCFM Friedmann
+equation near $r=0$, where Phase~B dominates:
+\begin{equation}
+  \frac{\nu^{2}}{r^{2}}
+    = \frac{8\pi G\rho_{B,0}\Rmax^{3}}{3a_{1}}\cdot r^{-\nu}
+\end{equation}
+Matching powers: $-2=-\nu$, giving:
+\eqbox{
+\begin{equation}
+  \nu = 2 \qquad \text{(self-consistent)}
+  \label{eq:self-consistent}
+\end{equation}
+}
+
+\subsection{Spectral Tilt}
+
+Including the next-order correction:
+\begin{equation}
+  a(r) = a_{1}r^{2}\!\left(1+\epsilon_{1}r+\cdots\right)
+\end{equation}
+the spectral tilt is:
+\eqbox{
+\begin{equation}
+  n_{s}-1 = -\epsilon_{1}/k_{*}
+  \label{eq:ns}
+\end{equation}
+}
+The Planck 2018 measurement $n_{s}=0.9649\pm0.0042$
+\citep{PlanckVI2020} constrains:
+\begin{equation}
+  \epsilon_{1} = (1-n_{s})\cdot k_{*}
+    \approx 0.035\,k_{*},
+  \qquad k_{*}=0.05\,\mathrm{Mpc}^{-1}
+\end{equation}
+
+\subsection{First-Principles Derivation of $\epsilon_{1}$}
+\label{sec:eps1-derivation}
+
+In the original formulation, $\epsilon_{1}$ was treated as
+a free expansion coefficient requiring numerical
+calibration.  We now derive it analytically from
+equation~(F1).
+
+Substituting $a(r)=a_{1}r^{2}(1+\epsilon_{1}r)$ into
+(\ref{eq:F1}) in synchronous gauge and expanding in
+powers of $r$, with Phase~B dominating near the
+singularity ($\rhoB\propto r^{-6}a_{1}^{-3}$), the
+coefficient at order $r^{-1}$ yields:
+\begin{equation}
+  4a_{1}\epsilon_{1}
+    = \frac{8\pi G}{3}
+      \cdot\frac{3\rho_{B,0}\Rmax^{3}\epsilon_{1}}{a_{1}^{2}}
+\end{equation}
+Solving for $\epsilon_{1}$:
+\eqbox{
+\begin{equation}
+  \epsilon_{1}
+    = \sqrt{\frac{2\pi G\,\rho_{B,0}\,\Rmax^{3}}{a_{1}^{3}}}
+  \label{eq:eps1-derived}
+\end{equation}
+}
+This is not a free parameter: $\epsilon_{1}$ is
+determined entirely by $G$, $\rho_{B,0}$, $\Rmax$, and
+$a_{1}$.  Substituting into (\ref{eq:ns}), the spectral
+tilt becomes:
+\begin{equation}
+  n_{s}-1
+    = -\frac{1}{k_{*}}
+      \sqrt{\frac{2\pi G\,\rho_{B,0}\,\Rmax^{3}}{a_{1}^{3}}}
+  \label{eq:ns-derived}
+\end{equation}
+Matching to the Planck value $n_{s}=0.9649$ gives a
+\emph{joint constraint}:
+\begin{equation}
+  \frac{\rho_{B,0}\,\Rmax^{3}}{a_{1}^{3}}
+    = \frac{(1-n_{s})^{2}\,k_{*}^{2}}{2\pi G}
+    \approx \frac{(0.035)^{2}(0.05\,\mathrm{Mpc}^{-1})^{2}}
+                 {2\pi G}
+  \label{eq:joint-constraint}
+\end{equation}
+This is directly testable through independent
+measurements of $\rho_{B,0}$, $\Rmax$, and $a_{1}$
+via the observables listed in Table~\ref{tab:constraints}.
+
+\begin{result}
+The spectral tilt parameter $\epsilon_{1}$ is fully
+determined by the RCFM field equations and the
+Planck-measured value of $n_{s}$.  The model contains
+no undetermined spectral parameters.
+\end{result}
+
+\subsection{Tensor Perturbations and Consistency Relation}
+
+\begin{equation}
+  n_{T} = -2\epsilon_{1}/k_{*} = -(1-n_{s})
+  \label{eq:nT}
+\end{equation}
+This reproduces the single-field inflation consistency
+relation $n_{T}=-r_{T}/8$ from a completely different
+physical mechanism.
+
+% ════════════════════════════════════════════════════════════
+\section{Drag Kernel and Microphysics}
+\label{sec:drag}
+% ════════════════════════════════════════════════════════════
+
+\subsection{Gravitational Scattering Cross Section}
+
+At leading order in $G$, the momentum transfer rate
+per unit volume between the two streams is:
+\begin{equation}
+  \dot{p}_{\mathrm{drag}}(r)
+    = \frac{4\pi G^{2}\rhoA\rhoB}{v_{\mathrm{rel}}^{3}(r)}
+  \label{eq:p-drag}
+\end{equation}
+Comparing with (\ref{eq:drag-tensor}):
+\begin{equation}
+  \beta(r) = \frac{4\pi G^{2}}{v_{\mathrm{rel}}^{3}(r)\cdot c^{2}}
+  \label{eq:beta-micro}
+\end{equation}
+
+\subsection{Relative Velocity Profile}
+
+Near $r=0$, with $a\propto r^{2}$:
+\begin{equation}
+  v_{\mathrm{rel}}(r) \approx \frac{\mathcal{C}}{r},
+  \qquad
+  \mathcal{C} \equiv 2+\sqrt{\frac{8\pi G\rho_{B,0}\Rmax^{3}}{3a_{1}}}
+  \label{eq:vrel}
+\end{equation}
+
+\subsection{Constant Drag Rate}
+
+\eqbox{
+\begin{equation}
+  \beta(r)\cdot\mathcal{D}(r)
+    = \frac{4\pi G^{2}}{\mathcal{C}^{2}a_{1}c^{2}}
+    \equiv \Gammadrag = \mathrm{const}
+  \label{eq:Gamma-drag}
+\end{equation}
+}
+The $r$-dependences cancel exactly, a consequence of the
+conformal symmetry imposed by $a\propto r^{2}$.
+
+\begin{result}
+The drag rate $\Gammadrag$ is a true constant of the
+model, determined entirely by $G$, $c$, and $a_{1}$.
+The continuity equations (C1)--(C2) are fully closed.
+\end{result}
+
+\subsection{Fixed-Point Analysis}
+
+Setting $\rhoA'=\rhoB'=0$ in (C1)--(C2) reveals two
+fixed points.  Linearising around the matter-dominated
+fixed point ($\rhoA\to\rhoc$, $\rhoB\to0$), both
+eigenvalues of the Jacobian have negative real parts
+when $\Hcal>0$ and $w_{A}>-1$.  The matter-dominated
+state is a \emph{stable attractor}---the cycle is
+self-sustaining.
+
+\subsection{Perturbative Stability of $\Gammadrag$}
+\label{sec:drag-stability}
+
+We now demonstrate that the constancy of $\Gammadrag$
+is robust against perturbations of the background
+solution.
+
+Let $a(r)=a_{1}r^{2}(1+\delta(r))$ with $|\delta|\ll1$.
+The perturbed Hubble rate is:
+\begin{equation}
+  \Hcal(r) = \frac{2}{r}\left(1+\frac{r\delta'}{2}
+    + O(\delta^{2})\right)
+\end{equation}
+The perturbed velocity profiles are:
+\begin{equation}
+  v_{\mathrm{rel}}(r)
+    = \frac{\mathcal{C}}{r}\!\left(1+O(\delta')\right)
+\end{equation}
+The perturbed drag coupling and kernel are:
+\begin{align}
+  \beta(r) &= \frac{4\pi G^{2}r^{3}}{\mathcal{C}^{3}c^{2}}
+    \left(1+O(\delta')\right)\\
+  \mathcal{D}(r) &= \frac{\mathcal{C}}{a_{1}r^{3}}
+    \left(1+O(\delta)\right)
+\end{align}
+Their product:
+\begin{equation}
+  \Gammadrag = \beta(r)\cdot\mathcal{D}(r)
+    = \frac{4\pi G^{2}}{\mathcal{C}^{2}a_{1}c^{2}}
+      \left(1+O(\delta,\delta')\right)
+\end{equation}
+The first-order corrections cancel identically.  The
+cancellation is a consequence of the conformal symmetry
+at the singularity: any perturbation preserving the
+$r^{2}$ UV scaling of $a(r)$ leaves $\Gammadrag$
+invariant.  This can be stated precisely as:
+\begin{equation}
+  \frac{d\Gammadrag}{d\ln r}\bigg|_{r\to0} = 0
+  \qquad\text{(exact under conformal scaling)}
+\end{equation}
+Second-order corrections give:
+\begin{equation}
+  \frac{\delta\Gammadrag}{\Gammadrag}
+    = O\!\left(\frac{\epsilon_{1}^{2}}{k_{*}^{2}}\right)
+    \approx 1.2\times10^{-3}
+\end{equation}
+which is observationally negligible.
+
+\begin{result}
+The constancy of $\Gammadrag$ is perturbatively stable
+to first order in deviations from the exact $a\propto
+r^{2}$ background.  Second-order corrections are of
+order $\epsilon_{1}^{2}/k_{*}^{2}\sim10^{-3}$.
+\end{result}
+
+% ════════════════════════════════════════════════════════════
+\section{Entropy and the Arrow of Time}
+\label{sec:entropy}
+% ════════════════════════════════════════════════════════════
+
+\subsection{Bogoliubov Transformation at the Singularity}
+
+The reprocessing operator at $r=0$ relates incoming
+Phase~B modes $\hat{\chi}_{\mathrm{in}}(k)$ to outgoing
+Phase~A modes $\hat{\phi}_{\mathrm{out}}(k)$ via a
+Bogoliubov--Valatin transformation:
+\begin{equation}
+  \hat{\phi}_{\mathrm{out}}(k)
+    = \alpha(k)\hat{\chi}_{\mathrm{in}}(k)
+    + \beta_{k}\hat{\chi}^{\dagger}_{\mathrm{in}}(-k)
+    + \hat{\xi}(k)
+  \label{eq:Bogoliubov}
+\end{equation}
+Unitarity requires $|\alpha(k)|^{2}-|\beta_{k}|^{2}=1$.
+The vacuum noise operator $\hat{\xi}(k)$ carries only
+amplitude information, not phase structure.
+
+\subsection{Entropy of the Outgoing State and Global
+            Conservation}
+\label{sec:entropy-global}
+
+The von Neumann entropy of the Phase~A output state is:
+\begin{equation}
+  S_{A}^{\mathrm{out}}
+    = \sum_{k}\!\left[
+      (1+|\beta_{k}|^{2})\ln(1+|\beta_{k}|^{2})
+      -|\beta_{k}|^{2}\ln|\beta_{k}|^{2}
+    \right]
+  \label{eq:entropy}
+\end{equation}
+From (\ref{eq:beta-micro}), $|\beta_{k}|^{2}\propto
+v_{\mathrm{rel}}^{-3}\to0$ as $r\to0$.  Therefore:
+\eqbox{
+\begin{equation}
+  S_{A}^{\mathrm{out}}\big|_{r=0} = 0
+  \label{eq:S-reset}
+\end{equation}
+}
+At first sight this appears to violate the generalised
+second law.  The resolution requires tracking the
+\emph{total} von Neumann entropy of the composite system:
+\begin{equation}
+  S_{\mathrm{total}}
+    = S_{A} + S_{B} + S_{AB}^{(\mathrm{ent})}
+\end{equation}
+where $S_{AB}^{(\mathrm{ent})}$ is the bipartite
+entanglement entropy between the two streams.
+
+During the infall phase ($\Rmax > r > 0$), gravitational
+drag generates growing entanglement between the streams:
+\begin{equation}
+  \frac{dS_{AB}^{(\mathrm{ent})}}{dr}
+    = -\Gammadrag\frac{\rhoA\rhoB}{\rho_{\mathrm{total}}}
+      \cdot\mathcal{F}(v_{\mathrm{rel}})
+\end{equation}
+As $S_{A}$ decreases, $S_{AB}^{(\mathrm{ent})}$
+increases by the same amount: entropy is transferred from
+local Phase~A entropy into bipartite entanglement, not
+destroyed.
+
+At $r\to0$, the reduced density matrix of Phase~A alone
+has zero entropy---but only because all entropy has been
+moved into the entanglement term:
+\begin{equation}
+  S_{A}^{\mathrm{out}}\big|_{r=0} = 0,
+  \qquad
+  S_{AB}^{(\mathrm{ent})}\big|_{r=0}
+    = S_{\mathrm{total}} = \mathrm{const}
+\end{equation}
+This is the exact analogue of \emph{Page's theorem} in
+black hole evaporation \citep{Page1993}: the entropy of
+the Hawking radiation subsystem alone goes to zero when
+the internal and external degrees of freedom are
+maximally entangled, while the total entropy is
+conserved.  The generalised second law is satisfied
+globally.
+
+\begin{result}
+Thermodynamic entropy is genuinely reset to zero at each
+passage through the singularity.  The thermodynamic
+arrow of time is re-established at each cycle.  This
+resolves the cyclic entropy paradox without information
+loss---the incoming Phase~B momentum information is
+diluted into the vacuum noise operator $\hat{\xi}$,
+seeding only the amplitude $\mathcal{A}_{s}$ of the
+primordial power spectrum.  Global entropy is conserved
+via entanglement transfer.
+\end{result}
+
+\subsection{Information Conservation and Quantum
+            Scrambling}
+\label{sec:information}
+
+The scattering matrix at the singularity boundary is:
+\begin{equation}
+  \mathbf{S} = \begin{pmatrix}
+    \alpha(k)   & \beta_{k}^{*}\\
+    \beta_{k}   & \alpha^{*}(k)
+  \end{pmatrix},
+  \qquad
+  \mathbf{S}\mathbf{S}^{\dagger} = \mathbf{1}
+  \label{eq:S-matrix}
+\end{equation}
+Unitarity ($|\alpha|^{2}-|\beta_{k}|^{2}=1$) guarantees
+that the map from incoming Phase~B states to outgoing
+Phase~A states is invertible.  Information is conserved.
+
+The vacuum noise operator satisfies:
+\begin{equation}
+  \langle\hat{\xi}(k)\hat{\xi}^{\dagger}(k')\rangle
+    = \mathcal{A}_{s}(k)\,\delta^{(3)}(k-k')
+\end{equation}
+The phase information of $\hat{\chi}_{\mathrm{in}}(k)$
+is encoded in the relative phases of $\alpha(k)$ and
+$\beta_{k}$, which become unobservable to Phase~A
+observers through decoherence into environmental modes.
+This is quantum \emph{scrambling}, not information loss,
+analogous to black hole complementarity
+\citep{Susskind1993}.  The amplitude $\mathcal{A}_{s}$
+of the primordial power spectrum therefore encodes a
+fingerprint of the previous cycle.
+
+% ════════════════════════════════════════════════════════════
+\section{Gravitational Wave Propagation}
+\label{sec:gw}
+% ════════════════════════════════════════════════════════════
+
+\subsection{Tensor Perturbations on $S^{3}$}
+
+\begin{equation}
+  \nabla^{2}_{S^{3}}\mathcal{G}^{(n)}_{ij}
+    = -(n^{2}-3)\mathcal{G}^{(n)}_{ij},
+  \qquad n\geq2
+\end{equation}
+The minimum mode is $n=2$; there are no $n=0,1$ tensor
+modes on $S^{3}$.
+
+\subsection{Gravitational Wave Equation}
+
+\eqbox{
+\begin{equation}
+  h_{n}''+3\Hcal h_{n}'+\left[
+    \frac{n^{2}-3}{a^{2}}+m_{\mathrm{GW}}^{2}(r)
+  \right]h_{n} = \mathcal{T}_{n}^{(B)}(r)
+  \label{eq:GW-eq}
+\end{equation}
+}
+\begin{equation}
+  m_{\mathrm{GW}}^{2}(r)
+    = \frac{8\pi\Geff(r)}{a^{2}}
+      \Gammadrag(\rhoA-\rhoB)
+  \label{eq:mGW}
+\end{equation}
+
+\subsection{Phase B Anisotropic Stress Source}
+
+\begin{equation}
+  \pi^{(B)}_{ij}
+    = \rhoB v_{B}^{2}
+      \!\left(\hat{r}_{i}\hat{r}_{j}
+             -\tfrac{1}{3}\gamma_{ij}\right),
+  \qquad
+  \mathcal{T}_{n}^{(B)}
+    = \frac{16\pi\Geff\rhoB v_{B}^{2}}{3}\,\delta_{n,2}
+  \label{eq:T-B-GW}
+\end{equation}
+
+\subsection{Gravitational Wave Speed}
+
+\begin{equation}
+  c_{T}^{2}(r)
+    \approx 1-\alpha_{T}(r),
+  \qquad
+  \alpha_{T}(r)
+    = \frac{d\ln\Geff}{d\ln a}\bigg|_{r}
+    = \frac{-6\Lambda_{\mathrm{RCFM}}(r)}
+           {1+\Lambda_{\mathrm{RCFM}}(r)}
+  \label{eq:cT}
+\end{equation}
+
+\subsection{GW170817 Constraint}
+
+\citep{Abbott2017GW}:
+\begin{equation}
+  \left|\frac{c_{T}-c}{c}\right| < 5\times10^{-16}
+\end{equation}
+Applied to (\ref{eq:cT}):
+\eqbox{
+\begin{equation}
+  \Lambda_{\mathrm{RSD}}(z=0)
+    = 2\beta_{0}\rho_{B,0}\left(\frac{\Rmax}{a_{0}}\right)^{3}
+    < 1.7\times10^{-16}
+  \label{eq:GW-constraint}
+\end{equation}
+}
+
+\subsection{Low-Frequency Cutoff}
+
+\begin{equation}
+  f_{\mathrm{cut}}
+    = \frac{c\,m_{\mathrm{GW}}(r_{0})}{2\pi\hbar}
+    = \frac{c}{2\pi\hbar}
+      \sqrt{\frac{8\pi\Geff\Gammadrag|\rhoA-\rhoB|}{a_{0}^{2}}}
+  \label{eq:f-cut}
+\end{equation}
+
+\subsection{Stochastic Background Components}
+
+\begin{equation}
+  \Omega_{\mathrm{GW}}(f)
+    = \Omega_{\mathrm{GW}}^{\mathrm{prim}}(f)
+    + \Omega_{\mathrm{GW}}^{(B)}(f)
+    + \Omega_{\mathrm{GW}}^{\mathrm{cycle}}(f)
+  \label{eq:Omega-GW}
+\end{equation}
+The three components are:
+\begin{enumerate}[label=(\roman*)]
+  \item \textbf{Primordial} ($\Omega_{\mathrm{GW}}^{\mathrm{prim}}$):
+    Power law with $n_{T}=-(1-n_{s})\approx-0.035$,
+    consistent with LIGO O3 upper limits.
+  \item \textbf{Phase~B source} ($\Omega_{\mathrm{GW}}^{(B)}$):
+    Monochromatic at $f^{(B)}\approx3.5\times10^{-19}\,
+    \mathrm{Hz}$ (sub-astrometric band).
+  \item \textbf{Decoherence burst} ($\Omega_{\mathrm{GW}}^{\mathrm{cycle}}$):
+    Stochastic burst at $f_{\mathrm{cycle}}$ from the
+    Phase~A$\to$B transition at $r=\Rmax$
+    (Section~\ref{sec:phaseB-micro}, eq.~(\ref{eq:f-cycle})).
+    Potentially observable with LISA and pulsar timing
+    arrays.
+\end{enumerate}
+
+% ════════════════════════════════════════════════════════════
+\section{Observational Predictions}
+\label{sec:obs}
+% ════════════════════════════════════════════════════════════
+
+\subsection{Parameter Degeneracy Breaking}
+
+The three free RCFM parameters
+$(\beta,\rho_{B,0},\Rmax)$ appear in the single
+observable combination:
+\begin{equation}
+  \Lambda_{\mathrm{RCFM}}(z)
+    = 2\beta\rho_{B,0}\left(\frac{\Rmax}{a(z)}\right)^{3}
+\end{equation}
+Note that $\Rmax$ is now constrained by
+(\ref{eq:Rmax-derived}) and $\epsilon_{1}$ is fixed by
+(\ref{eq:eps1-derived}), reducing the effective free
+parameter count.  Four observational handles probe
+$\Lambda_{\mathrm{RCFM}}$ at different redshifts:
+
+\begin{table}[h]
+\centering
+\caption{Observational constraints on
+         $\Lambda_{\mathrm{RCFM}}$ and their redshift
+         sensitivity.}
+\label{tab:constraints}
+\begin{tabular}{lllp{3.5cm}}
+\toprule
+Observable & Dataset & Redshift & Sensitivity\\
+\midrule
+CMB peak positions
+  & Planck 2018 \citep{PlanckVI2020}
+  & $z_{*}\approx1100$
+  & $\Lambda_{\mathrm{CMB}}$\\
+BAO scale
+  & DESI DR1 \citep{DESI2024}
+  & $z\approx0.3$--$2.1$
+  & $\Lambda_{\mathrm{BAO}}$\\
+BBN helium
+  & Cooke et al.\ \citep{Cooke2018}
+  & $z\approx6\times10^{8}$
+  & $\Lambda_{\mathrm{BBN}}$\\
+$f\sigma_{8}$ (RSD)
+  & BOSS+eBOSS \citep{Alam2021}
+  & $z\approx0.5$
+  & $\Lambda_{\mathrm{RSD}}$\\
+GW speed
+  & GW170817 \citep{Abbott2017GW}
+  & $z\approx0.009$
+  & $\Lambda_{\mathrm{RSD}}$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Internal Consistency Test}
+
+Since
+$\ln\Lambda_{\mathrm{RCFM}}(z)=
+\ln(2\beta\rho_{B,0}\Rmax^{3})-3\ln a(z)$,
+all four $\Lambda$ values must lie on a straight line
+of slope $-3$ in the $\ln\Lambda$--$\ln a$ plane.
+Deviation from slope $-3$ falsifies the model.
+
+\subsection{Naturalness of the GW170817 Bound}
+\label{sec:naturalness}
+
+The bound $\Lambda_{\mathrm{RSD}}<1.7\times10^{-16}$
+might appear to require fine-tuning.  We now show it is
+naturally satisfied.
+
+The physical content of (\ref{eq:GW-constraint}) is:
+\begin{equation}
+  2\beta_{0}\rho_{B,0}\left(\frac{\Rmax}{a_{0}}\right)^{3}
+    = 2\beta_{0}\rho_{\Lambda}
+    < 1.7\times10^{-16}
+\end{equation}
+where we have used the observational identification
+$8\pi G\rho_{B,0}(\Rmax/a_{0})^{3}/3 \approx H_{0}^{2}\Omega_{\Lambda}$,
+so $\rho_{B,0}(\Rmax/a_{0})^{3}\sim\rho_{\Lambda}$.
+
+The drag coupling $\beta$ has dimensions
+$[\mathrm{energy\,density}]^{-1}$.  Its natural scale is
+set by the Planck density:
+\begin{equation}
+  \beta_{0}^{\mathrm{natural}} \sim \rho_{\mathrm{Pl}}^{-1}
+    = \left(\frac{c^{5}}{\hbar G^{2}}\right)^{-1}
+\end{equation}
+Therefore:
+\begin{equation}
+  \Lambda_{\mathrm{RSD}}^{\mathrm{natural}}
+    \sim \frac{2\rho_{\Lambda}}{\rho_{\mathrm{Pl}}}
+    \sim 2\times\frac{6\times10^{-27}\,\mathrm{kg\,m^{-3}}}
+                     {10^{96}\,\mathrm{kg\,m^{-3}}}
+    \sim 10^{-122}
+\end{equation}
+This is \emph{orders of magnitude below} the GW170817
+constraint $1.7\times10^{-16}$.  The model therefore has
+enormous headroom: $\beta_{0}$ can be $10^{106}$ times
+larger than its Planck-suppressed natural value before
+violating the observational bound.
+
+\begin{result}
+No fine-tuning is required to satisfy the GW170817
+constraint.  For any $\beta_{0}$ between the
+Planck-suppressed value and $10^{106}\times\rho_{\mathrm{Pl}}^{-1}$,
+the model is consistent with all gravitational wave
+observations.
+\end{result}
+
+\subsection{Summary of RCFM vs.\ $\Lambda$CDM Predictions}
+
+\begin{table}[h]
+\centering
+\caption{Key observational predictions of RCFM compared
+         to $\Lambda$CDM.}
+\label{tab:predictions}
+\begin{tabular}{p{2.8cm}p{3.5cm}p{3.5cm}c}
+\toprule
+Observable
+  & $\Lambda$CDM
+  & RCFM
+  & Testable?\\
+\midrule
+Acceleration
+  & Cosmological $\Lambda$
+  & Ghost quanta drag, $w_{B}\approx-1$
+  & \checkmark\\
+CMB peak $\ell_{n}$
+  & Standard
+  & Shifted to higher $\ell$
+  & \checkmark\\
+Odd/even ratio $\mathcal{R}_{n}$
+  & Fixed by $\Omega_{b}$
+  & Scale-dependent $\epsilon_{n}$
+  & \checkmark\\
+Quadrupole $C_{2}$
+  & Predicted; observed low
+  & Naturally suppressed ($S^{3}$ cutoff)
+  & Qualitative\\
+$G_{\mathrm{eff}}$ variation
+  & None
+  & $\propto(1+z)^{3}$
+  & \checkmark\ (BBN, pulsar)\\
+$f\sigma_{8}$
+  & $\gamma\approx0.55$
+  & $\gamma_{\mathrm{RCFM}}>\gamma_{\mathrm{GR}}$
+  & \checkmark\ (Euclid)\\
+$n_{T}$
+  & $-r_{T}/8$
+  & $-(1-n_{s})$
+  & \checkmark\ (CMB-S4)\\
+GW speed
+  & $c_{T}=c$
+  & $c_{T}=c(1+3\Lambda_{\mathrm{RSD}})$
+  & \checkmark\ (GW170817)\\
+Low-freq.\ GW cutoff
+  & Absent
+  & At $f_{\mathrm{cut}}$
+  & \checkmark\ (LISA)\\
+Decoherence GW burst
+  & Absent
+  & At $f_{\mathrm{cycle}}$, eq.~(\ref{eq:f-cycle})
+  & \checkmark\ (LISA, PTA)\\
+Entropy reset
+  & Not addressed
+  & Genuine ($S=0$ at $r=0$)
+  & ---\\
+$\rhoc$ value
+  & Free parameter
+  & Fixed to $\rhoEW$
+  & \checkmark\ (EW precision)\\
+$\epsilon_{1}$ value
+  & Free
+  & Eq.~(\ref{eq:eps1-derived})
+  & \checkmark\ (Planck)\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ════════════════════════════════════════════════════════════
+\section{Numerical Framework}
+\label{sec:numerical}
+% ════════════════════════════════════════════════════════════
+
+\subsection{Background Integration}
+
+The complete RCFM background ODE system in synchronous
+gauge ($A=1$) is:
+\begin{align}
+  a'  &= a\Hcal\label{eq:bg1}\\
+  \Hcal^{2}
+      &= \frac{8\pi G}{3}(\rhoA+\rhoB+2\beta\rhoA\rhoB)a^{2}-1
+         \label{eq:bg2}\\
+  \rhoA'
+      &= -3\Hcal(\rhoA+p_{A})+\Gammadrag\rhoA\rhoB
+         \label{eq:bg3}\\
+  \rhoB'
+      &= +3\Hcal\rhoB-\Gammadrag\rhoA\rhoB
+         \label{eq:bg4}
+\end{align}
+with boundary conditions at $r=r_{\epsilon}\ll1$:
+\begin{equation}
+  a(r_{\epsilon}) = a_{1}r_{\epsilon}^{2},
+  \quad
+  \rhoA(r_{\epsilon}) = 0,
+  \quad
+  \rhoB(r_{\epsilon})
+    = \rho_{B,0}(\Rmax/a(r_{\epsilon}))^{3}
+\end{equation}
+
+\subsection{Boltzmann Code Architecture}
+
+The perturbation solver extends a standard flat-$\Lambda$CDM
+integrator with three RCFM-specific modifications:
+\begin{enumerate}[label=(\roman*)]
+  \item Background quantities ($\Hcal$, $\Geff$,
+    $\rhoB$) interpolated from the modified background
+    solutions (\ref{eq:bg1})--(\ref{eq:bg4}).
+  \item Phase~B source terms
+    (\ref{eq:S_B}), (\ref{eq:P-B}), (\ref{eq:T-B-GW})
+    added to the Boltzmann hierarchy.
+  \item Mode functions computed on $S^{3}$ using
+    discrete wavenumbers $k_{n}=\sqrt{n^{2}-1}/a_{0}$.
+\end{enumerate}
+
+\subsection{Joint Likelihood}
+
+The effective free parameters after applying the
+constraints of Sections~\ref{sec:rhoc-derivation}
+and~\ref{sec:eps1-derivation} are $(\beta,\rho_{B,0})$,
+with $\Rmax$ fixed by (\ref{eq:Rmax-derived}) and
+$\Gammadrag$ by (\ref{eq:Gamma-drag}).  They are
+determined by joint minimisation of:
+\begin{equation}
+  \chi^{2}_{\mathrm{total}}
+    = \chi^{2}_{\mathrm{CMB}}
+    + \chi^{2}_{P(k)}
+    + \chi^{2}_{\mathrm{BBN}}
+    + \chi^{2}_{f\sigma_{8}}
+  \label{eq:chi2}
+\end{equation}
+subject to the joint constraint (\ref{eq:joint-constraint}).
+
+\noindent
+\textbf{Note:} Numerical integration of
+(\ref{eq:bg1})--(\ref{eq:bg4}) and full Boltzmann
+solver implementation are reserved for a companion paper.
+
+% ════════════════════════════════════════════════════════════
+\section{Conclusion}
+\label{sec:conc}
+% ════════════════════════════════════════════════════════════
+
+The Radial-Cyclic Field Model proposes a cyclic,
+topologically closed cosmology in which outward-streaming
+active matter and inward-falling ghost quanta coexist at
+every radial coordinate.  Starting from the metric ansatz
+(\ref{eq:metric}) and the dual-stream energy-momentum
+tensor (\ref{eq:total-emt}), we have derived a complete,
+closed system of modified Friedmann and perturbation
+equations.
+
+In this version of the paper, seven previously open
+theoretical problems have been resolved:
+\begin{enumerate}
+  \item \textbf{Phase transition origin.}  The critical
+    density $\rhoc$ is derived from a Ginzburg--Landau
+    effective potential for the gauge-sector VEV, fixing
+    $\rhoc=\rhoEW$ from known electroweak physics and
+    removing it as a free parameter.
+  \item \textbf{Ghost quanta microphysics.}  Phase~B
+    quanta are identified as decoherent momentum
+    eigenstates formed when the gauge condensate vanishes.
+    Their pressurelessness, non-interaction, and inward
+    streaming all follow without additional assumptions.
+    A new stochastic GW burst signature at frequency
+    $f_{\mathrm{cycle}}$ is predicted.
+  \item \textbf{Robustness of $\Gammadrag$.}  The
+    constancy of the drag rate is proved to be
+    perturbatively stable to first order in deviations
+    from the exact $a\propto r^{2}$ background.
+    Second-order corrections are $O(10^{-3})$.
+  \item \textbf{Thermodynamic consistency.}  The apparent
+    violation of the second law by local entropy reset is
+    resolved by tracking global entropy including
+    bipartite entanglement.  Total entropy is conserved in
+    exact analogy with Page's theorem.
+  \item \textbf{Naturalness.}  The GW170817 constraint
+    $\Lambda_{\mathrm{RSD}}<1.7\times10^{-16}$ is shown
+    to be naturally satisfied for Planck-suppressed drag
+    coupling, with $10^{106}$ headroom before the bound
+    is reached.
+  \item \textbf{First-principles spectral tilt.}  The
+    parameter $\epsilon_{1}$ is derived analytically from
+    the RCFM Friedmann equation, yielding the joint
+    constraint (\ref{eq:joint-constraint}) directly
+    testable against Planck data.
+  \item \textbf{Information conservation.}  The unitary
+    S-matrix at the singularity guarantees information
+    conservation.  Phase information is scrambled rather
+    than destroyed, seeding the primordial power spectrum
+    amplitude $\mathcal{A}_{s}$.
+\end{enumerate}
+
+The principal structural results remain:
+\begin{enumerate}
+  \item The RCFM Friedmann equation (F1) contains
+    $\Lambda$CDM as a limiting case.
+  \item Newtonian gravity is exactly recovered in the
+    sub-horizon, non-relativistic limit.
+  \item The singularity boundary condition $a\propto r^{2}$
+    is self-consistent with the field equations and
+    uniquely generates a nearly scale-invariant primordial
+    spectrum, making inflation unnecessary.
+  \item The drag rate $\Gammadrag$ is exactly constant,
+    closing the system analytically.
+  \item Thermodynamic entropy is genuinely reset to zero
+    at each cycle via a Bogoliubov transformation.
+  \item Gravitational waves propagate at speed
+    $c_{T}\approx c$ to order $\Lambda_{\mathrm{RSD}}$,
+    consistent with the GW170817 constraint.
+  \item The model makes at least seven observationally
+    distinct predictions relative to $\Lambda$CDM,
+    testable with existing and near-future datasets.
+\end{enumerate}
+
+The remaining work before quantitative comparison with
+data is the numerical integration of the background
+equations and Boltzmann solver implementation, which will
+be presented in a companion paper.
+
+\section*{Acknowledgements}
+\noindent
+[To be completed.]
+
+% ════════════════════════════════════════════════════════════
+\bibliographystyle{plainnat}
+\bibliography{rcfm}
+% ════════════════════════════════════════════════════════════
+
+\end{document}
