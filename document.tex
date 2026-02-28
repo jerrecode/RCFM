@@ -4,11 +4,12 @@
 %  Compile with: pdflatex rcfm.tex && bibtex rcfm &&
 %                pdflatex rcfm.tex && pdflatex rcfm.tex
 % ============================================================
-\documentclass[12pt,a4paper]{article}
+\documentclass[10pt,twocolumn]{article}
 
 % ── Packages ────────────────────────────────────────────────
 \usepackage{amsmath,amssymb,amsfonts,amsthm}
-\usepackage[margin=1.1in]{geometry}
+\usepackage{cuted}
+\usepackage[a4paper,margin=1.0in]{geometry}
 \usepackage[colorlinks=true,
             linkcolor=blue!60!black,
             citecolor=blue!60!black,
@@ -28,8 +29,14 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
+
 \usepackage{setspace}
+\usepackage{varwidth}
+\usepackage{mdframed} 
 \usepackage{abstract}
+
+
+
 
 % ── Theorem environments ─────────────────────────────────────
 \theoremstyle{definition}
@@ -48,18 +55,69 @@
 \newcommand{\rhoEW}{\rho_{\mathrm{EW}}}
 \newcommand{\dOmega}{d\Omega_{3}^{2}}
 \newcommand{\Mpl}{M_{\mathrm{Pl}}}
+
 \newcommand{\LCDM}{\ensuremath{\Lambda\mathrm{CDM}}}
+
 \newcommand{\todo}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
+
+
+
+\makeatletter
+
+% configurable frame parameters (edit once here)
+\newlength{\eqboxinnerhmargin}
+\newlength{\eqboxinnervmargin}
+\setlength{\eqboxinnerhmargin}{10pt}
+\setlength{\eqboxinnervmargin}{6pt}
+
 \newcommand{\eqbox}[1]{%
-  \begin{mdframed}[backgroundcolor=blue!4,
-                   linecolor=blue!40,
-                   linewidth=0.8pt,
-                   innertopmargin=6pt,
-                   innerbottommargin=6pt]
-  #1
-  \end{mdframed}}
+  \begin{strip}%
+    \vspace{6pt}%
+    \begin{mdframed}[
+      innerleftmargin=\eqboxinnerhmargin,
+      innerrightmargin=\eqboxinnerhmargin,
+      innertopmargin=\eqboxinnervmargin,
+      innerbottommargin=\eqboxinnervmargin,
+      linewidth=0.8pt,
+      leftmargin=0pt,
+      rightmargin=0pt,
+      skipabove=0pt,
+      skipbelow=0pt
+    ]%
+      % inside mdframed, \linewidth is already:
+      % strip width - innerleftmargin - innerrightmargin
+      \noindent
+      \hbox to \linewidth{%
+        \hfil
+        \vbox{%
+          \centering
+          #1%
+        }%
+        \hfil
+      }%
+    \end{mdframed}%
+    \vspace{6pt}%
+  \end{strip}%
+}
+
+% One-column table (no frame)
+\newcommand{\onecoltable}[1]{%
+  \begin{strip}%
+    \vspace{6pt}%
+    \noindent
+    \hbox to \textwidth{\hfil #1\hfil}%
+    \vspace{6pt}%
+  \end{strip}%
+}
+
+\makeatother
+
+
+
 
 % ── Metadata ────────────────────────────────────────────────
+
+
 \title{%
   \textbf{The Radial-Cyclic Field Model (RCFM)}\\[6pt]
   \large A 4-Dimensional Topological Framework\\
@@ -70,13 +128,13 @@
   \small \textit{For Correspondence:}\\
   \small \texttt{jer.code.contact@gmail.com}
 }
-\date{18.02.2026 \\ \small Version 1.1 --- Pre-submission draft}
+\date{\today \\ \small Version 1.1 --- Pre-submission draft}
 
 % ════════════════════════════════════════════════════════════
+
 \begin{document}
 \maketitle
 \begin{abstract}
-\noindent
 The Radial-Cyclic Field Model (RCFM) proposes a cosmology in
 which the universe is a 4-dimensional hyperspherical standing
 wave.  Matter is generated at a continuously active central
@@ -140,11 +198,17 @@ equations and Boltzmann solver implementation are identified
 as the remaining steps before comparison with Planck, DESI,
 and LIGO/Virgo observational data.
 \end{abstract}
-\setcounter{tocdepth}{2}
+
+
+\newpage
+
+\setcounter{tocdepth}{3}
 \tableofcontents
+
 \newpage
 
 % ════════════════════════════════════════════════════════════
+
 \section{Introduction}
 \label{sec:intro}
 % ════════════════════════════════════════════════════════════
@@ -345,15 +409,15 @@ vanishes continuously as $\rhoA\to\rhoc^{+}$, consistent
 with the paper's original claim.
 
 The critical density is fixed to the electroweak scale:
-\eqbox{
-\begin{equation}
-  \rhoc \equiv \rhoEW
-    = \frac{\pi^{2}}{30}\,g_{*}(T_{\mathrm{EW}})\,
-      T_{\mathrm{EW}}^{4}
-    \approx \frac{\pi^{2}}{30}\times106.75\times
-      (100\,\mathrm{GeV})^{4}
-  \label{eq:rhoc-EW}
-\end{equation}
+\eqbox{%
+  \begin{equation}
+    \rhoc \equiv \rhoEW
+      = \frac{\pi^{2}}{30}\,g_{*}(T_{\mathrm{EW}})\,
+        T_{\mathrm{EW}}^{4}
+      \approx \frac{\pi^{2}}{30}\times106.75\times
+        (100\,\mathrm{GeV})^{4}
+    \label{eq:rhoc-EW}
+  \end{equation}
 }
 This is not a free parameter; it is determined entirely
 by the measured electroweak scale and the Standard Model
@@ -538,13 +602,13 @@ we obtain two independent equations.
 
 The $(r,r)$ Einstein equation gives the \emph{constraint}:
 \eqbox{
-\begin{equation}
-  \frac{(a')^{2}}{A}+1
-    = \frac{8\pi G}{3}
-      \!\left(\rhoA+\rhoB+2\beta\rhoA\rhoB\right)a^{2}
-  \tag{F1}
-  \label{eq:F1}
-\end{equation}
+  \begin{equation}
+    \frac{(a')^{2}}{A}+1
+      = \frac{8\pi G}{3}
+        \!\left(\rhoA+\rhoB+2\beta\rhoA\rhoB\right)a^{2}
+    \tag{F1}
+    \label{eq:F1}
+  \end{equation}
 }
 This is the RCFM Friedmann equation.  In synchronous
 gauge ($A=1$) it reduces to:
@@ -553,21 +617,24 @@ gauge ($A=1$) it reduces to:
   \label{eq:F1-sync}
 \end{equation}
 
+
 \subsection{Raychaudhuri Equation (F2)}
 
 The spatial $(i,j)$ Einstein equation gives the
 \emph{dynamical} equation:
+
 \eqbox{
-\begin{equation}
-  \frac{2}{\sqrt{A}}\frac{d\Hcal}{dr}
-    +3\Hcal^{2}+\frac{1}{a^{2}}
-    = -8\pi G\,p_{A}
-  \tag{F2}
-  \label{eq:F2}
-\end{equation}
+  \begin{equation}
+    \frac{2}{\sqrt{A}}\frac{d\Hcal}{dr}
+      +3\Hcal^{2}+\frac{1}{a^{2}}
+      = -8\pi G\,p_{A}
+    \tag{F2}
+    \label{eq:F2}
+  \end{equation}
 }
 Note the asymmetry: only $p_{A}$ appears, since
 Phase~B is pressureless.
+
 
 \subsection{Conservation Equations}
 
@@ -575,21 +642,22 @@ The Bianchi identity $\nabla_{\mu}T^{\mu\nu}=0$ yields
 two coupled conservation equations with the constant
 drag rate $\Gammadrag$ (derived in
 Section~\ref{sec:drag}):
-\eqbox{
-\begin{align}
-  \rhoA' + 3\Hcal\sqrt{A}(\rhoA+p_{A})
-    &= +\Gammadrag\,\rhoA\rhoB
-  \tag{C1}
-  \label{eq:C1}\\
-  \rhoB' - 3\Hcal\sqrt{A}\,\rhoB
-    &= -\Gammadrag\,\rhoA\rhoB
-  \tag{C2}
-  \label{eq:C2}
-\end{align}
+\eqbox{%
+  \begin{align}
+    \rhoA' + 3\Hcal\sqrt{A}(\rhoA+p_{A})
+      &= +\Gammadrag\,\rhoA\rhoB
+    \tag{C1}
+    \label{eq:C1}\\
+    \rhoB' - 3\Hcal\sqrt{A}\,\rhoB
+      &= -\Gammadrag\,\rhoA\rhoB
+    \tag{C2}
+    \label{eq:C2}
+  \end{align}
 }
 The signs encode the physical exchange: Phase~B loses
 energy to Phase~A via gravitational drag.  The total
 $\nabla_{\mu}T^{\mu\nu}=0$ is satisfied by construction.
+
 
 \subsection{Effective Gravitational Constant}
 
@@ -601,14 +669,15 @@ The Phase~B density evolves as:
 \end{equation}
 The RCFM effective gravitational constant is:
 \eqbox{
-\begin{equation}
-  \Geff(r) = G\!\left[
-    1+2\beta\,\rho_{B,0}
-    \left(\frac{\Rmax}{a(r)}\right)^{3}
-  \right]
-  \label{eq:G-eff}
-\end{equation}
+    \begin{equation}
+    \Geff(r) = G\!\left[
+      1+2\beta\,\rho_{B,0}
+      \left(\frac{\Rmax}{a(r)}\right)^{3}
+    \right]
+    \label{eq:G-eff}
+  \end{equation}
 }
+
 Current observations constrain the dimensionless
 correction:
 \begin{equation}
@@ -618,6 +687,7 @@ correction:
   \label{eq:Lambda-RCFM}
 \end{equation}
 
+
 \subsection{Recovery of $\Lambda$CDM as a Limiting Case}
 
 When $\beta\to0$ and
@@ -625,6 +695,8 @@ $\rhoB\to\Lambda/(8\pi G)=\mathrm{const}$,
 Eq.~(\ref{eq:F1}) reduces to the standard Friedmann
 equation with a cosmological constant.  The RCFM
 therefore contains $\Lambda$CDM as a limiting case.
+
+
 
 % ════════════════════════════════════════════════════════════
 \section{Phase A Equation of State}
@@ -672,12 +744,12 @@ Dilution       & $r\to\Rmax$               & ---            & ill-defined\\
 \subsection{Unified Analytic Parameterisation}
 
 A closed-form expression valid across all epochs is:
-\eqbox{
-\begin{equation}
-  w_{A}(\rhoA) = \frac{1}{3}\cdot
-    \frac{1}{1+\left(\rho_{\mathrm{eq}}/\rhoA\right)^{1/4}}
-  \label{eq:w-unified}
-\end{equation}
+\eqbox{%
+  \begin{equation}
+    w_{A}(\rhoA) = \frac{1}{3}\cdot
+      \frac{1}{1+\left(\rho_{\mathrm{eq}}/\rhoA\right)^{1/4}}
+    \label{eq:w-unified}
+  \end{equation}
 }
 where $\rho_{\mathrm{eq}}\approx4.15\times10^{-14}\,
 \mathrm{J\,m^{-3}}$ is the density at matter-radiation
@@ -723,12 +795,12 @@ potential \citep{Bardeen1980}.
 In the sub-horizon, quasi-static limit
 $k^{2}/\bar{a}^{2}\gg\bar{\Hcal}^{2}$, the perturbed
 $(r,r)$ Einstein equation reduces to:
-\eqbox{
-\begin{equation}
-  \nabla^{2}\Phi
-    = 4\pi\Geff\,\delta\rhoA
-  \label{eq:Poisson}
-\end{equation}
+\eqbox{%
+  \begin{equation}
+    \nabla^{2}\Phi
+      = 4\pi\Geff\,\delta\rhoA
+    \label{eq:Poisson}
+  \end{equation}
 }
 This is the Newtonian Poisson equation with effective
 gravitational constant $\Geff$ given by
@@ -835,15 +907,15 @@ Before recombination ($\dot{\kappa}\to\infty$):
 
 In tight coupling, combining (\ref{eq:B0}) and
 (\ref{eq:B1}) yields:
-\eqbox{
-\begin{equation}
-  \ddot{\Theta}_{0}
-    +\frac{\dot{R}_{b}}{1+R_{b}}\dot{\Theta}_{0}
-    +k^{2}c_{s}^{2}\Theta_{0}
-    = \mathcal{F}_{\mathrm{grav}}(\eta)
-    + \mathcal{S}_{B}(\eta)
-  \label{eq:OSC}
-\end{equation}
+\eqbox{%
+  \begin{equation}
+    \ddot{\Theta}_{0}
+      +\frac{\dot{R}_{b}}{1+R_{b}}\dot{\Theta}_{0}
+      +k^{2}c_{s}^{2}\Theta_{0}
+      = \mathcal{F}_{\mathrm{grav}}(\eta)
+      + \mathcal{S}_{B}(\eta)
+    \label{eq:OSC}
+  \end{equation}
 }
 The standard gravitational driving term is:
 \begin{equation}
@@ -915,17 +987,17 @@ Using the Seljak--Zaldarriaga line-of-sight method
 
 \subsection{Angular Power Spectrum}
 
-\eqbox{
-\begin{equation}
-  C_{\ell}^{\mathrm{RCFM}}
-    = \frac{2}{\pi}\int_{0}^{\infty}k^{2}
-      \left|\Delta_{\ell}^{(0)}(k)
-           +\Delta_{\ell}^{(B)}(k)
-           +\Delta_{\ell}^{\mathrm{ISW}}(k)
-      \right|^{2}
-      P_{\Phi}(k)\,dk
-  \label{eq:Cl}
-\end{equation}
+\eqbox{%
+  \begin{equation}
+    C_{\ell}^{\mathrm{RCFM}}
+      = \frac{2}{\pi}\int_{0}^{\infty}k^{2}
+        \left|\Delta_{\ell}^{(0)}(k)
+             +\Delta_{\ell}^{(B)}(k)
+             +\Delta_{\ell}^{\mathrm{ISW}}(k)
+        \right|^{2}
+        P_{\Phi}(k)\,dk
+    \label{eq:Cl}
+  \end{equation}
 }
 
 \subsection{Acoustic Peak Structure}
@@ -992,12 +1064,12 @@ relative to $\Lambda$CDM is predicted.
 where $\mathcal{S}=4\pi G a^{2}\bar{\rhoA}\cdot
 2\beta\bar{\rhoB}\delta_{B}$.
 
-\eqbox{
-\begin{equation}
-  D_{+}(r) = \Hcal(r)\int_{0}^{r}
-    \frac{dr'}{\Hcal^{3}(r')\,a^{2}(r')}
-  \label{eq:D+}
-\end{equation}
+\eqbox{%
+  \begin{equation}
+    D_{+}(r) = \Hcal(r)\int_{0}^{r}
+      \frac{dr'}{\Hcal^{3}(r')\,a^{2}(r')}
+    \label{eq:D+}
+  \end{equation}
 }
 \begin{equation}
   f\sigma_{8}(r) = \sigma_{8}\,\Omega_{A}^{\gamma}(r)
@@ -1025,24 +1097,24 @@ where $\mathcal{S}=4\pi G a^{2}\bar{\rhoA}\cdot
       \right]^{-1/4}
   \label{eq:BBKS}
 \end{equation}
-\eqbox{
-\begin{equation}
-  \mathcal{M}(k) = 1+\alpha_{\beta}
-    \ln\!\left(\frac{k}{k_{\mathrm{eq}}}\right)
-    \cdot\Lambda_{\mathrm{eq}}
-  \label{eq:Mk}
-\end{equation}
+\eqbox{%
+  \begin{equation}
+    \mathcal{M}(k) = 1+\alpha_{\beta}
+      \ln\!\left(\frac{k}{k_{\mathrm{eq}}}\right)
+      \cdot\Lambda_{\mathrm{eq}}
+    \label{eq:Mk}
+  \end{equation}
 }
 
 \subsection{Full Power Spectrum}
 
-\eqbox{
-\begin{equation}
-  P(k,r_{0}) = P_{\mathrm{ini}}(k)\cdot T_{A}^{2}(k)
-    \cdot D_{+}^{2}(r_{0})\cdot\mathcal{M}^{2}(k)
-    + P^{(B)}(k)
-  \label{eq:Pk}
-\end{equation}
+\eqbox{%
+  \begin{equation}
+      P(k,r_{0}) = P_{\mathrm{ini}}(k)\cdot T_{A}^{2}(k)
+      \cdot D_{+}^{2}(r_{0})\cdot\mathcal{M}^{2}(k)
+      + P^{(B)}(k)
+    \label{eq:Pk}
+  \end{equation}
 }
 \begin{equation}
   P^{(B)}(k)
@@ -1117,11 +1189,11 @@ equation near $r=0$, where Phase~B dominates:
     = \frac{8\pi G\rho_{B,0}\Rmax^{3}}{3a_{1}}\cdot r^{-\nu}
 \end{equation}
 Matching powers: $-2=-\nu$, giving:
-\eqbox{
-\begin{equation}
-  \nu = 2 \qquad \text{(self-consistent)}
-  \label{eq:self-consistent}
-\end{equation}
+\eqbox{%
+  \begin{equation}
+    \nu = 2 \qquad \text{(self-consistent)}
+    \label{eq:self-consistent}
+  \end{equation}
 }
 
 \subsection{Spectral Tilt}
@@ -1131,11 +1203,11 @@ Including the next-order correction:
   a(r) = a_{1}r^{2}\!\left(1+\epsilon_{1}r+\cdots\right)
 \end{equation}
 the spectral tilt is:
-\eqbox{
-\begin{equation}
-  n_{s}-1 = -\epsilon_{1}/k_{*}
-  \label{eq:ns}
-\end{equation}
+\eqbox{%
+  \begin{equation}
+    n_{s}-1 = -\epsilon_{1}/k_{*}
+    \label{eq:ns}
+  \end{equation}
 }
 The Planck 2018 measurement $n_{s}=0.9649\pm0.0042$
 \citep{PlanckVI2020} constrains:
@@ -1164,12 +1236,12 @@ coefficient at order $r^{-1}$ yields:
       \cdot\frac{3\rho_{B,0}\Rmax^{3}\epsilon_{1}}{a_{1}^{2}}
 \end{equation}
 Solving for $\epsilon_{1}$:
-\eqbox{
-\begin{equation}
-  \epsilon_{1}
-    = \sqrt{\frac{2\pi G\,\rho_{B,0}\,\Rmax^{3}}{a_{1}^{3}}}
-  \label{eq:eps1-derived}
-\end{equation}
+\eqbox{%
+  \begin{equation}
+    \epsilon_{1}
+      = \sqrt{\frac{2\pi G\,\rho_{B,0}\,\Rmax^{3}}{a_{1}^{3}}}
+    \label{eq:eps1-derived}
+  \end{equation}
 }
 This is not a free parameter: $\epsilon_{1}$ is
 determined entirely by $G$, $\rho_{B,0}$, $\Rmax$, and
@@ -1243,13 +1315,13 @@ Near $r=0$, with $a\propto r^{2}$:
 
 \subsection{Constant Drag Rate}
 
-\eqbox{
-\begin{equation}
-  \beta(r)\cdot\mathcal{D}(r)
-    = \frac{4\pi G^{2}}{\mathcal{C}^{2}a_{1}c^{2}}
-    \equiv \Gammadrag = \mathrm{const}
-  \label{eq:Gamma-drag}
-\end{equation}
+\eqbox{%
+  \begin{equation}
+    \beta(r)\cdot\mathcal{D}(r)
+      = \frac{4\pi G^{2}}{\mathcal{C}^{2}a_{1}c^{2}}
+      \equiv \Gammadrag = \mathrm{const}
+    \label{eq:Gamma-drag}
+  \end{equation}
 }
 The $r$-dependences cancel exactly, a consequence of the
 conformal symmetry imposed by $a\propto r^{2}$.
@@ -1362,11 +1434,11 @@ The von Neumann entropy of the Phase~A output state is:
 \end{equation}
 From (\ref{eq:beta-micro}), $|\beta_{k}|^{2}\propto
 v_{\mathrm{rel}}^{-3}\to0$ as $r\to0$.  Therefore:
-\eqbox{
-\begin{equation}
-  S_{A}^{\mathrm{out}}\big|_{r=0} = 0
-  \label{eq:S-reset}
-\end{equation}
+\eqbox{%
+  \begin{equation}
+    S_{A}^{\mathrm{out}}\big|_{r=0} = 0
+    \label{eq:S-reset}
+  \end{equation}
 }
 At first sight this appears to violate the generalised
 second law.  The resolution requires tracking the
@@ -1469,13 +1541,13 @@ modes on $S^{3}$.
 
 \subsection{Gravitational Wave Equation}
 
-\eqbox{
-\begin{equation}
-  h_{n}''+3\Hcal h_{n}'+\left[
-    \frac{n^{2}-3}{a^{2}}+m_{\mathrm{GW}}^{2}(r)
-  \right]h_{n} = \mathcal{T}_{n}^{(B)}(r)
-  \label{eq:GW-eq}
-\end{equation}
+\eqbox{%
+  \begin{equation}
+    h_{n}''+3\Hcal h_{n}'+\left[
+      \frac{n^{2}-3}{a^{2}}+m_{\mathrm{GW}}^{2}(r)
+    \right]h_{n} = \mathcal{T}_{n}^{(B)}(r)
+    \label{eq:GW-eq}
+  \end{equation}
 }
 \begin{equation}
   m_{\mathrm{GW}}^{2}(r)
@@ -1517,13 +1589,13 @@ modes on $S^{3}$.
   \left|\frac{c_{T}-c}{c}\right| < 5\times10^{-16}
 \end{equation}
 Applied to (\ref{eq:cT}):
-\eqbox{
-\begin{equation}
-  \Lambda_{\mathrm{RSD}}(z=0)
-    = 2\beta_{0}\rho_{B,0}\left(\frac{\Rmax}{a_{0}}\right)^{3}
-    < 1.7\times10^{-16}
-  \label{eq:GW-constraint}
-\end{equation}
+\eqbox{%
+  \begin{equation}
+    \Lambda_{\mathrm{RSD}}(z=0)
+      = 2\beta_{0}\rho_{B,0}\left(\frac{\Rmax}{a_{0}}\right)^{3}
+      < 1.7\times10^{-16}
+    \label{eq:GW-constraint}
+  \end{equation}
 }
 
 \subsection{Low-Frequency Cutoff}
