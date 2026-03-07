@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+title: Radial-Cyclic Field Model (RCFM)
+message: If you use this work, please cite it using the metadata below.
+authors:
+  - family-names: Resch
+    given-names: Jeremy Erich
+version: 1.2
+date-released: 2026
+license: CC-BY-4.0
+repository-code: https://github.com/yourusername/RCFM
+keywords:
+  - cosmology
+  - gravitational theory
+  - cyclic universe
+  - radial time
+  - spacetime models
