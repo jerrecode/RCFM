@@ -186,7 +186,7 @@
 \begin{abstract}
 The Radial-Cyclic Field Model (RCFM) proposes a cosmology in
 which the universe is a 4-dimensional hyperspherical standing
-wave.  Matter is generated at a continuously active central
+wave. Matter is generated at a continuously active central
 singularity, streams outward as field-bonded matter on
 expanding 3-spherical shells (Phase\nobreakspace{}A), undergoes a phase
 transition at a critical radius \( \Rmax \) where quantum fields
@@ -196,7 +196,9 @@ non-interacting ghost quanta (Phase\nobreakspace{}B).
 Starting from a metric ansatz on the 4-ball \( B^{4} \), we
 derive a closed system of modified Friedmann equations
 incorporating a dual-stream energy-momentum tensor with a
-gravitational drag interaction.  We show that:
+gravitational drag interaction whose microphysical origin is
+dynamical friction via retarded gravitational wakes.  We show
+that:
 \begin{enumerate}[label=(\roman*)]
   \item Newtonian gravity is recovered exactly in the
     weak-field, sub-horizon limit.
@@ -206,9 +208,7 @@ gravitational drag interaction.  We show that:
     fine-tuning.
   \item The singularity boundary condition \( a(r)\propto r^{2} \)
     is self-consistent and generates a nearly scale-invariant
-    primordial power spectrum with spectral tilt
-    \( n_{s}-1=-\epsilon_{1}/k_{*} \), making inflation
-    unnecessary.
+    primordial power spectrum, making inflation unnecessary.
   \item The drag kernel \( \Gammadrag \) is spatially constant,
     yielding a fully closed ODE system, and is shown to be
     perturbatively stable to first order in deviations from
@@ -224,29 +224,20 @@ gravitational drag interaction.  We show that:
     transformation on the boundary field theory; global
     entropy conservation is maintained through entanglement
     transfer, in analogy with Page's theorem.
-  \item The critical transition density \( \rhoc \) is derived
-    from electroweak symmetry restoration via a
-    Ginzburg--Landau effective potential, removing it as a
-    free parameter.
   \item Phase\nobreakspace{}B ghost quanta are identified as decoherent
     momentum eigenstates arising when the gauge condensate
     vanishes, with their pressurelessness and
     non-interaction following from the absence of gauge
     dressing.
-  \item The spectral tilt parameter \( \epsilon_{1} \) is derived
-    from first principles via the RCFM Friedmann equation,
-    yielding a joint constraint on $(\rho_{B,0}, \Rmax,
-    a_{1})$ consistent with the Planck 2018 measurement
-    \( n_{s}=0.9649\pm0.0042 \).
 \end{enumerate}
 Quantitative predictions for the CMB angular power spectrum
 \( C_{\ell} \), the matter power spectrum \( P(k) \), and the
 stochastic gravitational wave background are derived
-analytically.  Numerical integration of the background
-equations and Boltzmann solver implementation are identified
-as the remaining steps before comparison with Planck, DESI,
+analytically. Numerical integration of the background
+equations and Boltzmann solver implementation are reserved
+for a companion paper before comparison with Planck, DESI,
 and LIGO/Virgo observational data.
-\end{abstract} 
+\end{abstract}
 
 \newpage
 
@@ -719,7 +710,7 @@ Taking the imaginary part of the denominator (optical theorem) and integrating o
   \mathbf{F}_{\rm drag}=-\frac{4\pi G^2 m_A^2\rhoB\ln\Lambda}{v_{\rm rel}^2}\hat{\mathbf{v}}_{\rm rel}.
 \end{equation}
 
-The force density on the whole Phase\nobreakspace{}A fluid is \(n_A\mathbf{F}_{\rm drag}\). Converting to the relativistic 4-vector transfer rate and symmetrising gives exactly Eq.(\ref{eq:Q-micro}) of Section \ref{sec:drag-micro}.
+The force density on the whole Phase\nobreakspace{}A fluid is \(n_A\mathbf{F}_{\rm drag}\). Converting to the relativistic 4-vector transfer rate and symmetrising gives exactly Eq.\~(\ref{eq:Q-micro}) of Section\~\ref{sec:drag-micro}.
 
 Curvature corrections on the full 4-ball (Lichnerowicz operator on \(S^3\times\mathbb{R}\)) modify the drag by \(\ll 1\) and do not affect the leading \(\Gammadrag\).
 
@@ -1150,55 +1141,44 @@ solver implementation are reserved for a companion paper.
 % ════════════════════════════════════════════════════════════
 \section{Conclusion}
 \label{sec:conc}
-% ════════════════════════════════════════════════════════════
 
 The Radial-Cyclic Field Model proposes a cyclic,
 topologically closed cosmology in which outward-streaming
 active matter and inward-falling ghost quanta coexist at
-every radial coordinate.  Starting from the metric ansatz
+every radial coordinate. Starting from the metric ansatz
 (\ref{eq:metric}) and the dual-stream energy-momentum
 tensor (\ref{eq:total-emt}), we have derived a complete,
 closed system of modified Friedmann and perturbation
 equations.
 
-In this version of the paper, seven previously open
+In this version of the paper, five previously open
 theoretical problems have been resolved:
 \begin{enumerate}
-  \item \textbf{Phase transition origin.}  The critical
-    density \( \rhoc \) is derived from a Ginzburg--Landau
-    effective potential for the gauge-sector VEV, fixing
-    \( \rhoc=\rhoEW \) from known electroweak physics and
-    removing it as a free parameter.
-  \item \textbf{Ghost quanta microphysics.}  Phase\nobreakspace{}B
+  \item \textbf{Ghost quanta microphysics.} Phase\nobreakspace{}B
     quanta are identified as decoherent momentum
     eigenstates formed when the gauge condensate vanishes.
     Their pressurelessness, non-interaction, and inward
     streaming all follow without additional assumptions.
     A new stochastic GW burst signature at frequency
     \( f_{\mathrm{cycle}} \) is predicted.
-  \item \textbf{Robustness of \( \Gammadrag \).}  The
+  \item \textbf{Robustness of \( \Gammadrag \).} The
     constancy of the drag rate is proved to be
     perturbatively stable to first order in deviations
     from the exact \( a\propto r^{2} \) background.
     Second-order corrections are \( O(10^{-3}) \).
-  \item \textbf{Thermodynamic consistency.}  The apparent
+  \item \textbf{Thermodynamic consistency.} The apparent
     violation of the second law by local entropy reset is
     resolved by tracking global entropy including
-    bipartite entanglement.  Total entropy is conserved in
+    bipartite entanglement. Total entropy is conserved in
     exact analogy with Page's theorem.
-  \item \textbf{Naturalness.}  The GW170817 constraint
+  \item \textbf{Naturalness.} The GW170817 constraint
     \( \Lambda_{\mathrm{RSD}}<1.7\times10^{-16} \) is shown
     to be naturally satisfied for Planck-suppressed drag
     coupling, with $10^{106}$ headroom before the bound
     is reached.
-  \item \textbf{First-principles spectral tilt.}  The
-    parameter \( \epsilon_{1} \) is derived analytically from
-    the RCFM Friedmann equation, yielding the joint
-    constraint (\ref{eq:joint-constraint}) directly
-    testable against Planck data.
-  \item \textbf{Information conservation.}  The unitary
+  \item \textbf{Information conservation.} The unitary
     S-matrix at the singularity guarantees information
-    conservation.  Phase information is scrambled rather
+    conservation. Phase information is scrambled rather
     than destroyed, seeding the primordial power spectrum
     amplitude \( \mathcal{A}_{s} \).
 \end{enumerate}
