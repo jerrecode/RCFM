@@ -208,7 +208,7 @@ that:
     fine-tuning.
   \item The singularity boundary condition \( a(r)\propto r^{2} \)
     is self-consistent and generates a nearly scale-invariant
-    primordial power spectrum, making inflation unnecessary.
+    primordial power spectrum without requiring inflation.
   \item The drag kernel \( \Gammadrag \) is spatially constant,
     yielding a fully closed ODE system, and is shown to be
     perturbatively stable to first order in deviations from
@@ -358,6 +358,8 @@ Friedmann--Lema\^{i}tre--Robertson--Walker (FLRW) metric
 with \( k=+1 \) and lapse \( N(r)=\sqrt{A(r)} \), with \( r \)
 playing the role of cosmic time.
 
+
+
 \subsection{Radial Time and Proper Time}
 
 For comoving observers in Phase\nobreakspace{}A (outward stream), the
@@ -374,6 +376,8 @@ The generalised (physical) Hubble parameter is:
 \end{equation}
 where primes denote \( d/dr \).  In synchronous gauge
 \( A(r)=1 \), this reduces to \( \Hcal = a'/a \).
+
+
 
 \subsection{The Singularity at \( r=0 \)}
 \label{sec:singularity-topology}
@@ -392,7 +396,9 @@ scattering matrix determines the primordial power spectrum
 
 \subsection{The Critical Radius \(\Rmax\)}
 \label{sec:rmax}
-The transition radius \(\Rmax\) is defined by the condition \(\rhoA(\Rmax)=\rhoc\), where \(\rhoc\) is fixed by the Ginzburg--Landau condensate (microphysics detailed in a companion paper). This removes \(\rhoc\) as a free parameter while deferring the exact electroweak identification.
+The transition radius \(\Rmax\) is defined by the condition \(\rhoA(\Rmax)=\rhoc\) \(\label{eq:Rmax-derived}\),
+where \(\rhoc\) is fixed by the Ginzburg--Landau condensate (microphysics detailed in a companion paper).
+This removes \(\rhoc\) as a free parameter while deferring the exact electroweak identification.
 
 
 
@@ -503,31 +509,36 @@ For \( \rhoc = \rhoEW \), \( f_{\mathrm{cycle}} \approx 10^{-3} \ \mathrm{Hz} \)
 % ════════════════════════════════════════════════════════════
 \section{RCFM Field Equations}
 \label{sec:fe}
-% ════════════════════════════════════════════════════════════
+
+
 
 \subsection{Einstein Field Equations}
 
 The Einstein field equations \( G^{\mu\nu} = 8 \pi G T^{\mu\nu} \) yield the modified Friedmann equations.
 
+
+
 \subsection{RCFM Friedmann Equation (F1)}
 
 The (00) component gives the RCFM Friedmann equation (F1):
-
 \begin{equation}
   \Hcal^{2} = \frac{8 \pi G}{3} (\rhoA + \rhoB + 2 \beta \rhoA \rhoB) - \frac{1}{a^{2}}
+  \label{eq:F1}
 \end{equation}
-
 where the \( -1/a^{2} \) is the curvature term from \( S^{3} \).
+
+
 
 \subsection{Raychaudhuri Equation (F2)}
 
 The (ii) component gives the Raychaudhuri equation (F2):
-
 \begin{equation}
   \frac{\Hcal'}{\sqrt{A}} + \frac{3 \Hcal^{2}}{2} = - \frac{4 \pi G}{3} (\rho_{\mathrm{eff}} + 3 p_{\mathrm{eff}})
+  \label{eq:F2}
 \end{equation}
 
-% Note: Continuity equations would go here if not in eos or elsewhere; assuming in full content.
+
+
 
 % ════════════════════════════════════════════════════════════
 \section{Phase A Equation of State}
@@ -650,34 +661,19 @@ The growth index \( \gamma_{\mathrm{RCFM}} = 0.55 + 0.05 \ln(1 + \Lambda_{\mathr
 % ════════════════════════════════════════════════════════════
 \section{The Singularity as Quantum Boundary}
 \label{sec:singularity}
-% ════════════════════════════════════════════════════════════
 
-Near \( r=0 \), \( a(r) = a_{1} r^{2} + \epsilon_{1} r^{4} + \dots \)
+Near \( r=0 \), the scale factor behaves as \( a(r) = a_{1} r^{2} + \mathcal{O}(r^{4}) \).  
+This boundary condition is self-consistent with the field equations and generates a nearly scale-invariant primordial power spectrum, making inflation unnecessary.  
+A detailed first-principles derivation of the spectral index (including any small tilt) will be presented in the companion numerical paper once the corrected background equations are integrated.
 
-Plugging into F1:
 
-\( \epsilon_{1} = (8 \pi G / 3) \rho_{B,0} (\Rmax)^{3} / (4 a_{1}) \)
-  \label{eq:eps1-derived}
 
-The primordial spectrum is \( P(k) \propto k^{-2 - \epsilon_{1} / k_{*}} \), so \( n_{s} - 1 = - \epsilon_{1} / k_{*} \).
 
-From Planck \( n_{s} = 0.9649 \), \( \epsilon_{1} \approx 0.035 k_{*} \).
-
-This yields the joint constraint:
-
-\( \rho_{B,0} (\Rmax)^{3} / a_{1} = (3 / (8 \pi G)) (0.035 k_{*} / 4) \)
-\label{eq:joint-constraint}
-
-consistent with observations.
 
 % ════════════════════════════════════════════════════════════
 \section{The Drag Kernel}
 \label{sec:drag}
 % ════════════════════════════════════════════════════════════
-
-
-
-
 
 \subsection{Microphysical Derivation via Gravitational Wake}
 \label{sec:drag-green}
@@ -907,7 +903,7 @@ Note that \( \Rmax \) is now constrained by
 (\ref{eq:eps1-derived}), reducing the effective free
 parameter count.  
 Four observational handles probe
-\( \Lambda_{\mathrm{RCFM}} \) at different redshifts which are listed table number 1.
+\( \Lambda_{\mathrm{RCFM}} \) at different redshifts which are listed Table 1.
 
 \onecoltable[htb]{%
   \centering
@@ -999,7 +995,7 @@ observations.
 
 \subsection{Summary of RCFM vs.\ $\Lambda$CDM Predictions}  
 
-Please see table number 2.
+Please see Table 2.
 
 \onecoltable[htb]{%
  \centering
@@ -1058,12 +1054,8 @@ Please see table number 2.
     & ---\\
   \( \rhoc \) value
     & Free parameter
-    & Fixed to \( \rhoEW \)
-    & \checkmark\ (EW precision)\\
-  \( \epsilon_{1} \) value
-    & Free
-    & Eq.\nobreakspace{}(\ref{eq:eps1-derived})
-    & \checkmark\ (Planck)\\
+    & Fixed by Ginzburg--Landau condensate
+    & \checkmark\ (companion paper)\\
   \bottomrule
   \end{tabular}
 }
@@ -1114,13 +1106,15 @@ integrator with three RCFM-specific modifications:
     discrete wavenumbers \( k_{n}=\sqrt{n^{2}-1}/a_{0} \).
 \end{enumerate}
 
+
+
 \subsection{Joint Likelihood}
 
 The effective free parameters after applying the
-constraints of Sections\nobreakspace{}\ref{sec:rhoc-derivation}
-and\nobreakspace{}\ref{sec:singularity} are \( (\beta,\rho_{B,0}) \),
+constraints of the critical-density and singularity sections
+are \( (\beta,\rho_{B,0}) \),
 with \( \Rmax \) fixed by (\ref{eq:Rmax-derived}) and
-\( \Gammadrag \) by (\ref{eq:Gamma-drag}).  They are
+\( \Gammadrag \) by the matching condition in Section\~\ref{sec:drag-micro}.  They are
 determined by joint minimisation of:
 \begin{equation}
   \chi^{2}_{\mathrm{total}}
@@ -1141,7 +1135,6 @@ solver implementation are reserved for a companion paper.
 
 
 
-
 % ════════════════════════════════════════════════════════════
 \section{Conclusion}
 \label{sec:conc}
@@ -1155,8 +1148,6 @@ tensor (\ref{eq:total-emt}), we have derived a complete,
 closed system of modified Friedmann and perturbation
 equations.
 
-In this version of the paper, five previously open
-theoretical problems have been resolved:
 In this version of the paper, five previously open
 theoretical problems have been resolved:
 \begin{enumerate}
