@@ -1,19 +1,18 @@
 % ============================================================
 %  RCFM Companion Paper — Numerical Implementation & Constraints
 %  Draft — companion to main paper v1.3
-%  UTF-8 GUARANTEED: compile with pdflatex (see comment below)
 % ============================================================
 
 \documentclass[10pt,twocolumn]{article}
 
 % ── UTF-8 & Font Setup (explicit & robust) ─────────────────
-\usepackage[utf8]{inputenc}          % ← forces UTF-8 input
-\usepackage[T1]{fontenc}             % ← proper glyph mapping
-\usepackage{lmodern}                 % ← scalable font with full UTF-8 coverage
-\usepackage[utf8]{luainputenc}       % ← extra safety for modern pdflatex
-\usepackage{microtype}               % ← better line breaks with UTF-8
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[utf8]{luainputenc}
+\usepackage{microtype}
 
-% ── Rest of packages (identical to main paper) ─────────────
+% ── Rest of packages (identical to main) ───────────────────
 \usepackage{amsmath,amssymb,amsfonts,amsthm}
 \usepackage{cuted}
 \usepackage[a4paper,margin=1.0in]{geometry}
@@ -33,7 +32,7 @@
 \usepackage{caption}
 \usepackage{subcaption}
 
-% ── Custom macros (copy from main) ────────────────────────
+% ── Custom macros ──────────────────────────────────────────
 \newcommand{\Rmax}{R_{\max}}
 \newcommand{\rhoA}{\rho_{A}}
 \newcommand{\rhoB}{\rho_{B}}
@@ -44,7 +43,6 @@
 \newcommand{\dOmega}{d\Omega_{3}^{2}}
 \newcommand{\LCDM}{\ensuremath{\Lambda\mathrm{CDM}}}
 
-% ── Title & Metadata ───────────────────────────────────────
 \title{%
   \textbf{Numerical Implementation and Observational Constraints}\\
   \large of the Radial-Cyclic Field Model (RCFM)}
@@ -104,9 +102,9 @@ Modified nanoCMB / CLASS with:
 \item Drag term in continuity equations.
 \end{itemize}
 
-\section{Likelihood & Results}
-Joint \( \chi^2 \) over CMB, BAO, BBN, \( f\sigma_8 \), GW170817.
-Posteriors, \( C_\ell \), \( P(k) \), \( \Omega_{\rm GW}(f) \)
+\section{Likelihood \& Results}
+Joint \(\chi^2\) over CMB, BAO, BBN, \(f\sigma_8\), GW170817.
+Posteriors, \(C_\ell\), \(P(k)\), \(\Omega_{\rm GW}(f)\)
 will be shown in final version.
 
 \section{Numerical Implementation Details}
