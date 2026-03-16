@@ -57,30 +57,43 @@
 
 \begin{abstract}
 We present the first complete numerical realisation of the
-Radial-Cyclic Field Model. The radial coordinate \( r \) is
-fundamentally spatial, yet Pauli exclusion, gauge entanglement
-across each \( S^3 \) shell, and the one-way valve at the
-singularity force it to behave as an emergent timelike
-coordinate for local Phase-A observers via the proper-time
-mapping \( d\tau = \sqrt{A(r)}\,dr \). Using the corrected
-background equations and microphysical drag kernel (dynamical
-friction via retarded gravitational wakes), we integrate the
-full system, implement an \( S^3 \)-adapted Boltzmann hierarchy,
-and perform joint likelihood analysis.
+Radial-Cyclic Field Model (RCFM). Although the radial
+coordinate \( r \) is fundamentally spatial (a coordinate of
+the closed 4-ball \( B^4 \)), Pauli exclusion, gauge
+entanglement across each local \( S^3 \) shell, and the
+one-way valve at the singularity impose emergent constraints
+that force \( r \) to behave identically to a timelike
+coordinate for local Phase-A observers. This is realised
+through the proper-time mapping \( d\tau = \sqrt{A(r)}\,dr \).
 
-Key results:
-- \( H(z) \) matches observations within 3\% for \( z<2 \).
-- CMB peaks shifted by \( \Delta\ell \approx +1 \).
-- Enhanced growth index \( \gamma_{\rm RCFM} > 0.55 \), mild
-  \( S_8 \) tension resolver.
+Using the corrected background equations (including the
+exact Friedmann and Raychaudhuri pair) together with the
+microphysical gravitational-drag kernel derived from
+retarded gravitational wakes (with explicit curvature
+corrections shown to be \( O((r/R_{\max})^2) \)), we integrate
+the full ODE system, implement an \( S^3 \)-adapted Boltzmann
+hierarchy with Phase-B source terms, and perform a joint
+likelihood analysis against Planck 2018, DESI DR1,
+BOSS+eBOSS, BBN, and the GW170817 speed bound.
+
+Key numerical results include:
+- Hubble parameter \( H(z) \) within 3\% of observations for
+  \( z < 2 \),
+- CMB acoustic peaks shifted by \( \Delta\ell \approx +1 \),
+- Enhanced growth index \( \gamma_{\rm RCFM} > 0.55 \)
+  (mild \( S_8 \) tension resolver),
 - Stochastic GW background with low-frequency cutoff at
-  \( f_{\rm cut}\approx 10^{-3} \) Hz and decoherence burst.
+  \( f_{\rm cut} \approx 10^{-3} \) Hz and a decoherence
+  burst signature.
 
 All parameters remain natural (Planck-suppressed \( \beta \)
-with \( 10^{106} \) headroom). Full code is released.
+with \( 10^{106} \) headroom). The complete code (background
+integrator, modified CLASS/nanoCMB solver, and MCMC
+likelihood) is released alongside this paper.
 
-This completes the RCFM and places it in direct competition
-with \( \Lambda \)CDM.
+The RCFM is now a fully predictive, inflation-free, cyclic
+alternative to \( \Lambda \)CDM, with clear testable
+signatures for current and forthcoming datasets.
 \end{abstract}
 
 \newpage
