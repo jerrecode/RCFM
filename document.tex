@@ -225,8 +225,8 @@ that:
     entropy conservation is maintained through entanglement
     transfer, in analogy with Page's theorem.
   \item The critical transition density \( \rhoc \) is fixed by
-    a Ginzburg--Landau condensate \citep{Ginzburg1950,LandauSM},
-    removing it as a free parameter.
+    a Ginzburg--Landau condensate (microphysics detailed
+    in a companion paper), removing it as a free parameter.
   \item Phase\nobreakspace{}B ghost quanta are identified as decoherent
     momentum eigenstates arising when the gauge condensate
     vanishes, with their pressurelessness and
@@ -439,13 +439,6 @@ The transition radius \(\Rmax\) is defined by the condition \(\rhoA(\Rmax)=\rhoc
 where \(\rhoc\) is fixed by the Ginzburg--Landau condensate (microphysics derived in Section \ref{sec:phaseB-micro}).
 This removes \(\rhoc\) as a free parameter while deferring the exact electroweak identification.
 
-The first slow-roll parameter is fixed by the singularity boundary condition:
-\begin{equation}
-  \epsilon_{1} \equiv -\frac{\dot{H}}{H^{2}} = \frac{1}{2} \quad \text{at } r\to 0,
-  \label{eq:eps1-derived}
-\end{equation}
-which follows from the \(a\propto r^{2}\) scaling near the singularity.
-
 
 
 % ════════════════════════════════════════════════════════════
@@ -571,14 +564,6 @@ The (00) component gives the RCFM Friedmann equation (F1):
   \label{eq:F1}
 \end{equation}
 where the \( -1/a^{2} \) is the curvature term from \( S^{3} \).
-
-The background equations can be written as:
-\begin{align}
-  \frac{da}{dr} &= \sqrt{A}\,\Hcal a \label{eq:bg1} \\
-  \frac{d\Hcal}{dr} &= \sqrt{A}\,\left[\frac{4\pi G}{3}(\rho_{\rm eff}+3p_{\rm eff}) - \Hcal^{2}\right] \label{eq:bg2} \\
-  \frac{d\rhoA}{dr} &= -\sqrt{A}\,\Hcal(\rhoA + p_{A}) + \Gammadrag\rhoA\rhoB \label{eq:bg3} \\
-  \frac{d\rhoB}{dr} &= \sqrt{A}\,\Hcal\rhoB - \Gammadrag\rhoA\rhoB \label{eq:bg4}
-\end{align}
 
 
 
@@ -1172,12 +1157,8 @@ The effective free parameters after applying the
 constraints of the critical-density and singularity sections
 are \( (\beta,\rho_{B,0}) \),
 with \( \Rmax \) fixed by (\ref{eq:Rmax-derived}) and
-\( \Gammadrag \) by the matching condition in Section~\ref{sec:drag-micro}.
-The joint constraint combining all observational probes is:
-\begin{equation}
-  \chi^{2} = \chi^{2}_{\rm CMB} + \chi^{2}_{\rm BAO} + \chi^{2}_{\rm BBN} + \chi^{2}_{f\sigma_{8}} + \chi^{2}_{\rm GW170817}
-  \label{eq:joint-constraint}
-\end{equation}
+\( \Gammadrag \) by the matching condition in Section\~\ref{sec:drag-micro}.
+subject to the joint constraint (\ref{eq:joint-constraint}).
 \noindent
 \textbf{Note:} Numerical integration of (\ref{eq:bg1})--(\ref{eq:bg4}),
 the \(S^3\)-adapted Boltzmann hierarchy, and the joint likelihood analysis are presented in full in this section.
