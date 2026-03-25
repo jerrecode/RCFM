@@ -1,0 +1,110 @@
+[
+  {
+    "name": "Pantheon+ DataRelease (GitHub archive, main)",
+    "url": "https://github.com/PantheonPlusSH0ES/DataRelease/archive/refs/heads/main.zip",
+    "relpath": "raw/pantheon_plus/pantheonplus_datas_release-main.zip",
+    "notes": "Complete repository archive (small->medium). Use for validation and extracting CSV / FITRES files from Pantheon+ DataRelease. Source: GitHub."
+  },
+  {
+    "name": "DESI DR1 BAO - README",
+    "url": "https://data.desi.lbl.gov/public/dr1/vac/dr1/bao-cosmo-params/v1.0/README.md",
+    "relpath": "raw/desi_2024/README.md",
+    "notes": "Light-weight README describing the DESI BAO products (index + pointers to chains)."
+  },
+  {
+    "name": "DESI DR1 BAO - SHA256SUM",
+    "url": "https://data.desi.lbl.gov/public/dr1/vac/dr1/bao-cosmo-params/v1.0/dr1_vac_dr1_bao-cosmo-params_v1.0.sha256sum",
+    "relpath": "raw/desi_2024/dr1_vac_dr1_bao-cosmo-params_v1.0.sha256sum",
+    "notes": "Hashes to validate downloads in the DESI BAO folder."
+  },
+  {
+    "name": "DESI DR1 BAO Cosmology Chains & MCMC Samples",
+    "url": "https://data.desi.lbl.gov/public/dr1/vac/dr1/bao-cosmo-params/v1.0/",
+    "relpath": "raw/desi_2024/bao-cosmo-params/",
+    "notes": "Full directory of cosmology chains, BAO posteriors, best-fit files, and MCMC samples (chain_*.txt, bestfit.minimum.txt etc.). Directory index; extend downloader if you want to crawl all files automatically. Matches the 'cosmology chains, BAO posteriors, MCMC samples' requirement."
+  },
+  {
+    "name": "GW170817 Posterior Samples (EoS-insensitive)",
+    "url": "https://dcc.ligo.org/public/0152/P1800115/005/EoS-insensitive_posterior_samples.dat",
+    "relpath": "raw/gw170817/GW170817_EoS-insensitive_posterior_samples.dat",
+    "notes": "Bayesian posterior samples for GW170817 (parameters for cosmology: luminosity distance, inclination, H0 etc.). Direct .dat file from LIGO DCC P1800115. Replaces previous 404 HDF5 link. Used in many cosmological analyses."
+  },
+  {
+    "name": "Planck 2018 CMB Power Spectra - TT-full R3.01",
+    "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/cosmoparams/COM_PowerSpect_CMB-TT-full_R3.01.txt",
+    "relpath": "raw/planck_2018/COM_PowerSpect_CMB-TT-full_R3.01.txt",
+    "notes": "Planck 2018 CMB TT power spectrum full (direct mirror from IRSA). Already present in your tree – will be skipped."
+  },
+  {
+    "name": "Planck 2018 CMB Power Spectra - TT-binned R3.01",
+    "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/cosmoparams/COM_PowerSpect_CMB-TT-binned_R3.01.txt",
+    "relpath": "raw/planck_2018/COM_PowerSpect_CMB-TT-binned_R3.01.txt",
+    "notes": "Planck 2018 CMB TT power spectrum binned (direct mirror from IRSA). Already present in your tree – will be skipped."
+  },
+  {
+    "name": "Planck 2018 CMB Power Spectra - TE-full R3.01",
+    "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/cosmoparams/COM_PowerSpect_CMB-TE-full_R3.01.txt",
+    "relpath": "raw/planck_2018/COM_PowerSpect_CMB-TE-full_R3.01.txt",
+    "notes": "Planck 2018 CMB TE power spectrum full (direct mirror from IRSA). Already present in your tree – will be skipped."
+  },
+  {
+    "name": "Planck 2018 CMB Power Spectra - TE-binned R3.02",
+    "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/cosmoparams/COM_PowerSpect_CMB-TE-binned_R3.02.txt",
+    "relpath": "raw/planck_2018/COM_PowerSpect_CMB-TE-binned_R3.02.txt",
+    "notes": "Planck 2018 CMB TE power spectrum binned (direct mirror from IRSA). Already present in your tree – will be skipped."
+  },
+  {
+    "name": "Planck 2018 CMB Power Spectra - EE-full R3.01",
+    "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/cosmoparams/COM_PowerSpect_CMB-EE-full_R3.01.txt",
+    "relpath": "raw/planck_2018/COM_PowerSpect_CMB-EE-full_R3.01.txt",
+    "notes": "Planck 2018 CMB EE power spectrum full (direct mirror from IRSA). Already present in your tree – will be skipped."
+  },
+  {
+    "name": "Planck 2018 CMB Power Spectra - EE-binned R3.02",
+    "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/cosmoparams/COM_PowerSpect_CMB-EE-binned_R3.02.txt",
+    "relpath": "raw/planck_2018/COM_PowerSpect_CMB-EE-binned_R3.02.txt",
+    "notes": "Planck 2018 CMB EE power spectrum binned (direct mirror from IRSA). Already present in your tree – will be skipped."
+  },
+  {
+    "name": "Planck 2018 CMB Power Spectra - low-ell BB full R3.01",
+    "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/cosmoparams/COM_PowerSpect_CMB-low-ell-BB-full_R3.01.txt",
+    "relpath": "raw/planck_2018/COM_PowerSpect_CMB-low-ell-BB-full_R3.01.txt",
+    "notes": "Planck 2018 CMB low-ell BB power spectrum full (direct mirror from IRSA). Already present in your tree – will be skipped."
+  },
+  {
+    "name": "Planck 2018 CMB Power Spectra - low-ell EB full R3.01",
+    "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/cosmoparams/COM_PowerSpect_CMB-low-ell-EB-full_R3.01.txt",
+    "relpath": "raw/planck_2018/COM_PowerSpect_CMB-low-ell-EB-full_R3.01.txt",
+    "notes": "Planck 2018 CMB low-ell EB power spectrum full (direct mirror from IRSA). Already present in your tree – will be skipped."
+  },
+  {
+    "name": "Planck 2018 CMB Power Spectra - base-plikHM-TTTEEE-lowl-lowE-lensing-minimum R3.01",
+    "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/cosmoparams/COM_PowerSpect_CMB-base-plikHM-TTTEEE-lowl-lowE-lensing-minimum_R3.01.txt",
+    "relpath": "raw/planck_2018/COM_PowerSpect_CMB-base-plikHM-TTTEEE-lowl-lowE-lensing-minimum_R3.01.txt",
+    "notes": "Planck 2018 CMB base plikHM TTTEEE lowl lowE lensing minimum (direct mirror from IRSA). Already present in your tree – will be skipped."
+  },
+  {
+    "name": "Planck 2018 CMB Power Spectra - base-plikHM-TTTEEE-lowl-lowE-lensing-minimum-theory R3.01",
+    "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/cosmoparams/COM_PowerSpect_CMB-base-plikHM-TTTEEE-lowl-lowE-lensing-minimum-theory_R3.01.txt",
+    "relpath": "raw/planck_2018/COM_PowerSpect_CMB-base-plikHM-TTTEEE-lowl-lowE-lensing-minimum-theory_R3.01.txt",
+    "notes": "Planck 2018 CMB base plikHM TTTEEE lowl lowE lensing minimum theory (direct mirror from IRSA). Already present in your tree – will be skipped."
+  },
+  {
+    "name": "Planck 2018 CMB Likelihoods & Masks",
+    "url": "https://pla.esac.esa.int/pla/aio/product-action?MAP.MAP_ID=COM_Likelihoods",
+    "relpath": "raw/planck_2018/likelihoods_and_masks/",
+    "notes": "Planck 2018 CMB likelihoods (clik format) and masks from official ESA PLA. Power spectra already covered; this adds the full likelihood package + masks as required. Use PLA search for exact MAP_ID if the link redirects."
+  },
+  {
+    "name": "SDSS RSD Data (BOSS DR12 galaxy catalog North - CMASS+LOWZ combined)",
+    "url": "https://data.sdss.org/sas/dr12/boss/lss/galaxy_DR12v5_CMASSLOWZ_North.fits.gz",
+    "relpath": "raw/sdss_rsd/galaxy_DR12v5_CMASSLOWZ_North.fits.gz",
+    "notes": "SDSS DR12 BOSS combined CMASS+LOWZ galaxy catalog (North) in FITS.gz format. This is the current official replacement for the old .dat.gz file (which no longer exists on the server). Used for RSD / BAO analysis."
+  },
+  {
+    "name": "BOSS/eBOSS Final BAO & RSD Measurements Table",
+    "url": "https://www.sdss4.org/science/final-bao-and-rsd-measurements-table/",
+    "relpath": "raw/sdss_rsd/final_bao_rsd_measurements.html",
+    "notes": "Final BAO and RSD measurements table from SDSS (fσ8 values, covariances etc.). Page contains the full table; save as HTML or extract data for cosmology use. Matches the 'final BAO and RSD measurements table' requirement."
+  }
+]
