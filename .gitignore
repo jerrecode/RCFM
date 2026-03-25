@@ -1,0 +1,10 @@
+data/*
+!data/manifest.json
+
+*.aux
+*.log
+*.out
+*.pdf
+
+*.bak
+.envrc

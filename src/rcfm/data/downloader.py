@@ -7,7 +7,7 @@ from tqdm import tqdm
 import datetime
 
 # Base directory is the folder containing this script (matches your PWD)
-DATA_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = Path(__file__).resolve().parents[3] / "Data"
 MANIFEST_PATH = os.path.join(DATA_DIR, "manifest.json")
 PROGRESS_PATH = os.path.join(DATA_DIR, ".progress")
 LOG_PATH = os.path.join(DATA_DIR, "download_log.txt")
