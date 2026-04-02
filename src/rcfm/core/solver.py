@@ -56,11 +56,17 @@ class BackgroundSolver:
         w = self.fluid.equation_of_state(r)
         p_A = w * rho_A
 
-        # Effective quantities
+        # Effective quantities (per paper equations 18-22)
         beta = self.params.beta
         Gamma = self.params.Gamma_drag
         rho_eff = rho_A + rho_B + 2 * beta * rho_A * rho_B
-        p_eff = p_A - beta * Gamma * rho_A * rho_B * (rho_A - rho_B) / (3 * H)
+
+        # Effective pressure: corrected formula (BUG-FIX-2)
+        # Paper eq (22): p_eff = p_A - (βΓ/3H) * ρ_A * ρ_B * (ρ_A - ρ_B)
+        # Using H variable instead of Lambda_RCFM(0)
+        # Handle H → 0 case to avoid division by zero
+        H_safe = max(abs(H), 1e-30) * np.sign(H) if H != 0 else 1e-30
+        p_eff = p_A - (beta * Gamma * rho_A * rho_B * (rho_A - rho_B)) / (3 * H_safe)
 
         # Lapse function (synchronous gauge)
         A = 1.0
@@ -69,8 +75,10 @@ class BackgroundSolver:
         # da/dr = sqrt(A) * H * a
         da_dr = sqrt_A * H * a
 
-        # dH/dr = sqrt(A) * [4πG/3 * (ρ_eff + 3p_eff) - H²]
-        dH_dr = sqrt_A * (4 * np.pi * self.G / 3 * (rho_eff + 3 * p_eff) - H**2)
+        # Raychaudhuri equation (BUG-FIX-1): CORRECTED SIGN
+        # Paper eq (28): H'/√A + H² = -(4πG/3)(ρ_eff + 3p_eff)
+        # Rearranged: dH/dr = √A * [-(4πG/3)(ρ_eff + 3p_eff) - H²]
+        dH_dr = sqrt_A * (-(4 * np.pi * self.G / 3) * (rho_eff + 3 * p_eff) - H**2)
 
         # drho_A/dr = -sqrt(A) * H * (rho_A + p_A) + Gamma * rho_A * rho_B
         drho_A_dr = -sqrt_A * H * (rho_A + p_A) + Gamma * rho_A * rho_B
@@ -132,6 +140,33 @@ class BackgroundSolver:
             dense_output=True
         )
 
+        # BUG-FIX-7: Check solution success and handle failures
+        if not solution.success:
+            # Log warning but don't crash - allow calling code to handle
+            import warnings
+            warnings.warn(
+                f"ODE solver failed: {solution.message}. "
+                f"Status: {solution.status}. Results may be unreliable.",
+                RuntimeWarning
+            )
+
+        # Verify solution contains valid data
+        if len(solution.t) == 0:
+            raise RuntimeError(
+                f"ODE solver produced no output points. "
+                f"Initial conditions may be invalid: y0={y0}"
+            )
+
+        # Check for NaN or Inf in solution
+        y_solution = solution.y
+        if np.any(~np.isfinite(y_solution)):
+            import warnings
+            warnings.warn(
+                "Solution contains NaN or Inf values. "
+                "Check initial conditions and physics parameters.",
+                RuntimeWarning
+            )
+
         return {
             'r': solution.t,
             'a': solution.y[0, :],
@@ -139,7 +174,10 @@ class BackgroundSolver:
             'rho_A': solution.y[2, :],
             'rho_B': solution.y[3, :],
             'success': solution.success,
-            'message': solution.message
+            'message': solution.message,
+            'status': solution.status,
+            'nfev': solution.nfev,
+            'njev': solution.njev
         }
 
     def compute_H_of_z(self, solution: dict) -> Callable:

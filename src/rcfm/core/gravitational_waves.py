@@ -68,6 +68,8 @@ class GravitationalWaves:
 
         From paper: m_GW² = 8π G_eff Γ_drag (ρ_A - ρ_B) / a²
 
+        BUG-FIX-3: Corrected G_eff formula per paper eq. (523-525).
+
         Args:
             z: Redshift
 
@@ -76,8 +78,15 @@ class GravitationalWaves:
         """
         a = 1.0 / (1 + z)
 
-        # Effective G
-        G_eff = self.G * (1 + self.params.Lambda_RCFM(z))
+        # BUG-FIX-3: CORRECTED G_eff formula
+        # Paper eq. (523-525): G_eff = G * (1 + β * ρ_B * (R_max/a)³)
+        # Note: Lambda_RCFM = 2 * β * rho_B0 * (Rmax/a)³, so:
+        # G_eff = G * (1 + Lambda_RCFM/2)
+        G_eff = self.G * (1 + 0.5 * self.params.Lambda_RCFM(z))
+
+        # Also can use direct formula:
+        # G_eff = self.G * (1 + self.params.beta * self.params.rho_B0 *
+        #                    (self.params.Rmax / a)**3)
 
         # densities (simplified)
         rho_A = self.params.rho_B0 * a**(-3)
